@@ -63,11 +63,13 @@ void rules()
     getch();
 }
 
+//Print credits
 void credits()
 {
-    cout << "This game was created by " << BLUE_BOLD << "GLOVER Adam" << RESET << endl;
+    cout << "This game was coded by " << BLUE_BOLD << "GLOVER Adam" << RESET << endl;
     getch();
 }
+
 
 //Main function
 int main()

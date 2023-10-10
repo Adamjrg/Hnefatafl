@@ -4,7 +4,10 @@ Hnefatafl also known as Viking Chess
 
 ## Description
 
-This is a old stratagie game
+Hnefatafl is an abstract combinatorial strategy game of Scandinavian origin.
+The Vikings considered the game hnefatafl as important.
+However, the rules of the game have never been found, and only a few pieces and fragments of apron have survived.
+So we don't know the exact rules.
 
 ## Getting Started
 

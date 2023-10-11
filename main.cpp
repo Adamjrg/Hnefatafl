@@ -3,6 +3,7 @@
 #include "typeDef.h"
 
 using namespace std;
+
 const string RESET = "\e[0m";
 const string BOLD_RED  = "\e[1;31m";
 const string HIGHLIGHT  = "\e[7m";
@@ -14,6 +15,8 @@ int main()
 {
     int menu = 0;
     int choice = 0;
+    int boardSize = 0;
+
 
     //Welcome message
     system("cls");
@@ -85,8 +88,10 @@ int main()
         cin >> choice;
         switch(choice){
         case 11:
+            boardSize = LITTLE;
             break;
         case 13:
+            boardSize = BIG;
             break;
         default:
             cout << BOLD_RED << "Please enter a valid choice" << RESET << endl;
@@ -94,15 +99,30 @@ int main()
             main();
             break;
         }
-
         break;
     //Invalid input
     default:
         cout << BOLD_RED << "Please enter a valid option" << RESET << endl;
         getch(); //Wait for user input
-        main(); //Recursion recall to restart
+        main(); //Restart
         break;
     }
+
+    Cell gameBoard[boardSize][boardSize];
+    //Initializing game board to empty
+    for (short int i = 0; i < boardSize;i++)
+    {
+        for (short int j = 0; j < boardSize;j++) {
+            gameBoard[i][j].itsCellType= NORMAL;
+            gameBoard[i][j].itsPieceType= NONE;
+        }
+    }
+
+    //Set black peices
+
+
+
+
 
 
 

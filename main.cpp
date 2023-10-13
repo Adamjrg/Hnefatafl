@@ -95,7 +95,8 @@ int main()
             break;
         default:
             cout << BOLD_RED << "Please enter a valid choice" << RESET << endl;
-            getch(); //Wait for user input
+            cin.clear();
+            cin.ignore();
             main();
             break;
         }
@@ -103,7 +104,8 @@ int main()
     //Invalid input
     default:
         cout << BOLD_RED << "Please enter a valid option" << RESET << endl;
-        getch(); //Wait for user input
+        cin.clear();
+        cin.ignore();
         main(); //Restart
         break;
     }
@@ -119,10 +121,75 @@ int main()
     }
 
     //Set black peices
+    for (short int i = (boardSize/2)-2; i <= (boardSize/2)+2;i++)
+    {
+        //Top and bottom pieces
+        gameBoard[i][0].itsPieceType= SWORD;
+        gameBoard[i][boardSize-1].itsPieceType= SWORD;
+
+        //Left and right side pieces
+        gameBoard[0][i].itsPieceType= SWORD;
+        gameBoard[boardSize-1][i].itsPieceType= SWORD;
+    }
+    //Top and bottom center pieces
+    gameBoard[boardSize/2][1].itsPieceType = SWORD;
+    gameBoard[boardSize/2][boardSize-2].itsPieceType = SWORD;
+
+    //Left and right middle pieces
+    gameBoard[1][boardSize/2].itsPieceType = SWORD;
+    gameBoard[boardSize-2][boardSize/2].itsPieceType = SWORD;
 
 
+    //Set white pieces for the big board
+    if (boardSize == BIG) {
+        for (short int i =(boardSize/2)-3; i <= (boardSize/2)+3; i++) {
+            if (i != boardSize/2) {
+                gameBoard[i][boardSize/2].itsPieceType = SHIELD;
+                gameBoard[boardSize/2][i].itsPieceType = SHIELD;
+            }
+        }
+    }//Set white pieces for the small board
+    else if (boardSize == LITTLE)
+    {
+        int offset = 0;
+        for (short int i =(boardSize/2)-2; i <= (boardSize/2)+2; i++)
+        {
+            for (short int j =(boardSize/2)-offset; j <= (boardSize/2)+offset; j++) {
+                gameBoard[i][j].itsPieceType = SHIELD;
+            }
+
+            if (i >= boardSize/2) {
+                offset-=1;
+            } else {
+                offset+=1;
+            }
+        }
+    }
 
 
+    //Set king
+    gameBoard[boardSize/2][boardSize/2].itsPieceType = KING;
+
+
+    //Show the board
+    for(short int i = 0; i <= boardSize; i++) {
+        cout << "     " <<BLUE_BOLD << i << RESET;
+    }
+    cout << endl;
+
+    char start = 'A';
+    for(short int i = 0; i <= boardSize; i++) {
+        cout << "  ";
+        for(short int j = 0; j < boardSize; j++) {
+            cout << "+-----";
+        }
+        cout << endl;
+        cout <<BLUE_BOLD<< char(start+i) << RESET;
+        for(short int j = 0; j < boardSize+1; j++) {
+            cout << " |    ";
+        }
+        cout << endl;
+    }
 
 
 

@@ -17,9 +17,9 @@ const string KING_CHAR = "\u25CA";
 //Main function
 int main()
 {
-    int menu = 0;
-    int choice = 0;
-    int boardSize = 0;
+    short unsigned menu = 0;
+    short unsigned choice = 0;
+    short unsigned boardSize = 0;
 
 
     //Welcome message
@@ -89,21 +89,24 @@ int main()
 
     //Game
     case 3:
-
+        //Ask for size
         cout << "Would you like to play on a 11x11 or 13x13 grid? (11,13)" << endl;
         cin >> choice;
         switch(choice){
+            //Choose size LITTLE (11)
         case 11:
             boardSize = LITTLE;
             break;
+            //Choose size BIG (13)
         case 13:
             boardSize = BIG;
             break;
+            //Invalid input
         default:
             cout << BOLD_RED << "Please enter a valid choice" << RESET << endl;
             cin.clear();
             cin.ignore();
-            main();
+            main(); //restart
             break;
         }
         break;
@@ -115,19 +118,21 @@ int main()
         main(); //Restart
         break;
     }
+    cin.clear();
+    cin.ignore();
 
     Cell gameBoard[boardSize][boardSize];
     //Initializing game board to empty
-    for (short int i = 0; i < boardSize;i++)
+    for (short unsigned i = 0; i < boardSize;i++)
     {
-        for (short int j = 0; j < boardSize;j++) {
+        for (short unsigned j = 0; j < boardSize;j++) {
             gameBoard[i][j].itsCellType= NORMAL;
             gameBoard[i][j].itsPieceType= NONE;
         }
     }
 
     //Set black peices
-    for (short int i = (boardSize/2)-2; i <= (boardSize/2)+2;i++)
+    for (short unsigned i = (boardSize/2)-2; i <= (boardSize/2)+2;i++)
     {
         //Top and bottom pieces
         gameBoard[i][0].itsPieceType= SWORD;
@@ -148,7 +153,7 @@ int main()
 
     //Set white pieces for the big board
     if (boardSize == BIG) {
-        for (short int i =(boardSize/2)-3; i <= (boardSize/2)+3; i++) {
+        for (short unsigned i =(boardSize/2)-3; i <= (boardSize/2)+3; i++) {
             if (i != boardSize/2) {
                 gameBoard[i][boardSize/2].itsPieceType = SHIELD;
                 gameBoard[boardSize/2][i].itsPieceType = SHIELD;
@@ -158,9 +163,9 @@ int main()
     else if (boardSize == LITTLE)
     {
         int offset = 0;
-        for (short int i =(boardSize/2)-2; i <= (boardSize/2)+2; i++)
+        for (short unsigned i =(boardSize/2)-2; i <= (boardSize/2)+2; i++)
         {
-            for (short int j =(boardSize/2)-offset; j <= (boardSize/2)+offset; j++) {
+            for (short unsigned j =(boardSize/2)-offset; j <= (boardSize/2)+offset; j++) {
                 gameBoard[i][j].itsPieceType = SHIELD;
             }
 
@@ -188,52 +193,60 @@ int main()
 
     //Show the board
     cout << " ";
-    for(short int i = 1; i <= boardSize; i++) {
-        cout << (i > 10 ? "    " : "     ") <<BLUE_BOLD << i << RESET;
+    for(short unsigned i = 1; i <= boardSize; i++) {
+        cout << (i > 10 ? "    " : "     ") << BLUE_BOLD << i << RESET;
     }
     cout << endl;
 
-
-    char start = 'A';
-    for(short int i = 1; i <= boardSize; i++) {
+    char start = 'A'; //Starting value
+    for(short unsigned i = 1; i <= boardSize; i++) {
         cout << "   ";
-        for(short int j = 1; j < boardSize+1; j++) {
+        //Set spacing
+        for(short unsigned j = 1; j < boardSize+1; j++) {
             cout << "+-----";
         }
+        //End of line
         cout << "+";
         cout << endl;
-        cout <<BLUE_BOLD<< char(start-1+i) << RESET;
-        for(short int j = 0; j < boardSize; j++) {
+
+        cout << BLUE_BOLD << char(start-1+i) << RESET;
+        for(short unsigned j = 0; j < boardSize; j++) {
+            //Show empty
             if (gameBoard[i-1][j].itsPieceType == NONE && gameBoard[i-1][j].itsCellType == NORMAL) {
                 cout << "  |   ";
             }
+            //Show Black pieces
             else if (gameBoard[i-1][j].itsPieceType == SWORD) {
                 cout << "  |  "<< BLACK_CHAR;
             }
+            //Show White pieces
             else if (gameBoard[i-1][j].itsPieceType == SHIELD){
                 cout << "  |  "<< WHITE_CHAR;
             }
+            //Show king
             else if (gameBoard[i-1][j].itsPieceType == KING){
                 cout << "  |  "<< KING_CHAR;
             }
+            //Show castle
             else if (gameBoard[i-1][j].itsCellType == CASTLE){
-                cout << "  |  "<< "X";
+                cout << "  |  "<< BOLD_RED << "X" << RESET;
             }
+            //Show fortress
             else if (gameBoard[i-1][j].itsCellType == FORTRESS){
                 cout << "  |  "<< "O";
             }
         }
+        //End of line
         cout << "  |";
         cout << endl;
     }
+    //Last line
     cout << "   ";
-    for(short int j = 1; j < boardSize+1; j++) {
+    for(short unsigned j = 1; j < boardSize+1; j++) {
         cout << "+-----";
     }
     cout << "+";
     cout << endl;
-
-
 
     return 0;
 }

@@ -4,7 +4,12 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.cpp
+        functions.cpp \
+        main.cpp \
+        mains.cpp \
+        tests.cpp
 
 HEADERS += \
+    functions.h \
+    tests.h \
     typeDef.h

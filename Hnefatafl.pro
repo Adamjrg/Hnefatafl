@@ -6,7 +6,6 @@ CONFIG -= qt
 SOURCES += \
         functions.cpp \
         main.cpp \
-        mains.cpp \
         tests.cpp
 
 HEADERS += \

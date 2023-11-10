@@ -20,11 +20,56 @@
  */
 
 #include <iostream>
-#include <sstream>
 
 #include "typeDef.h"
 #include "functions.h"
 
 using namespace std;
 
+/**
+ * @brief Clears the console depending on the operating system
+ *
+ */
+void clearConsole()
+{
+    #ifdef _WIN32
+    system("cls");
+    #elif __APPLE__
+    system("clear");
+    #endif
+}
 
+
+void displayHnefataflLogo(){
+    cout << " _   _             __      _         __ _ " << endl;
+    cout << "| | | |           / _|    | |       / _| |" << endl;
+    cout << "| |_| |_ __   ___| |_ __ _| |_ __ _| |_| |" << endl;
+    cout << "|  _  | '_ "<< "\\" << " / _ "<< "\\"<<"  _/ _` | __/ _` |  _| |" << endl;
+    cout << "| | | | | | |  __/ || (_| | || (_| | | | |" << endl;
+    cout << "\\"<<"_| |_/_| |_|"<<"\\"<<"___|_| "<<"\\"<<"__,_|"<<"\\"<<"__"<<"\\"<<"__,_|_| |_|" << endl;
+    cout << endl;
+    cout << "Welcome to Hnefatafl" << endl;
+}
+
+
+bool chooseSizeBoard(BoardSize &aBoardSize){
+    int choice = 0;
+    cout << "Would you like to play on a 11x11 or 13x13 grid? (11,13)" << endl;
+    cin >> choice;
+    switch(choice){
+        //Choose size LITTLE (11)
+    case 11:
+        aBoardSize = LITTLE;
+        return true;
+
+        //Choose size BIG (13)
+    case 13:
+        aBoardSize = BIG;
+        return true;
+
+        //Invalid input
+    default:
+        return false;
+        break;
+    }
+}

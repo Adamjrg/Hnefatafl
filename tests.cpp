@@ -154,19 +154,19 @@ void test_initializeBoard()
 
     // Set positions for shields (defenders)
     Position shieldsPositionsLittle[] = {
-                                         { kingPos.itsRow - 1, kingPos.itsCol },
-                                         { kingPos.itsRow + 1, kingPos.itsCol },
-                                         { kingPos.itsRow, kingPos.itsCol - 1 },
-                                         { kingPos.itsRow, kingPos.itsCol + 1 },
-                                         { kingPos.itsRow - 1, kingPos.itsCol - 1 },
-                                         { kingPos.itsRow + 1, kingPos.itsCol + 1 },
-                                         { kingPos.itsRow - 1, kingPos.itsCol + 1 },
-                                         { kingPos.itsRow + 1, kingPos.itsCol - 1 },
-                                         { kingPos.itsRow - 2, kingPos.itsCol },
-                                         { kingPos.itsRow + 2, kingPos.itsCol },
-                                         { kingPos.itsRow, kingPos.itsCol - 2 },
-                                         { kingPos.itsRow, kingPos.itsCol + 2 },
-                                         };
+            { kingPos.itsRow - 1, kingPos.itsCol },
+            { kingPos.itsRow + 1, kingPos.itsCol },
+            { kingPos.itsRow, kingPos.itsCol - 1 },
+            { kingPos.itsRow, kingPos.itsCol + 1 },
+            { kingPos.itsRow - 1, kingPos.itsCol - 1 },
+            { kingPos.itsRow + 1, kingPos.itsCol + 1 },
+            { kingPos.itsRow - 1, kingPos.itsCol + 1 },
+            { kingPos.itsRow + 1, kingPos.itsCol - 1 },
+            { kingPos.itsRow - 2, kingPos.itsCol },
+            { kingPos.itsRow + 2, kingPos.itsCol },
+            { kingPos.itsRow, kingPos.itsCol - 2 },
+            { kingPos.itsRow, kingPos.itsCol + 2 },
+    };
 
     for (const Position& pos : shieldsPositionsLittle) {
         bLittle[pos.itsRow][pos.itsCol].itsPieceType = SHIELD;
@@ -174,31 +174,31 @@ void test_initializeBoard()
 
     // Set positions for swords (attackers)
     Position swordsPositionsLittle[] = {
-                                        { kingPos.itsRow, 0 },
-                                        { kingPos.itsRow - 1, 0 },
-                                        { kingPos.itsRow - 2, 0 },
-                                        { kingPos.itsRow + 1, 0 },
-                                        { kingPos.itsRow + 2, 0 },
-                                        { kingPos.itsRow, 1 },
-                                        { kingPos.itsRow, little-1},
-                                        { kingPos.itsRow - 1, little-1 },
-                                        { kingPos.itsRow - 2, little-1 },
-                                        { kingPos.itsRow + 1, little-1 },
-                                        { kingPos.itsRow + 2, little-1 },
-                                        { kingPos.itsRow, little-2 },
-                                        { 0, kingPos.itsCol },
-                                        { 0, kingPos.itsCol - 1 },
-                                        { 0, kingPos.itsCol - 2 },
-                                        { 0, kingPos.itsCol + 1 },
-                                        { 0, kingPos.itsCol + 2 },
-                                        { 1, kingPos.itsCol },
-                                        { little-1, kingPos.itsCol },
-                                        { little-1, kingPos.itsCol - 1 },
-                                        { little-1, kingPos.itsCol - 2 },
-                                        { little-1, kingPos.itsCol + 1 },
-                                        { little-1, kingPos.itsCol + 2 },
-                                        { little-2, kingPos.itsCol },
-                                        };
+            { kingPos.itsRow, 0 },
+            { kingPos.itsRow - 1, 0 },
+            { kingPos.itsRow - 2, 0 },
+            { kingPos.itsRow + 1, 0 },
+            { kingPos.itsRow + 2, 0 },
+            { kingPos.itsRow, 1 },
+            { kingPos.itsRow, little-1},
+            { kingPos.itsRow - 1, little-1 },
+            { kingPos.itsRow - 2, little-1 },
+            { kingPos.itsRow + 1, little-1 },
+            { kingPos.itsRow + 2, little-1 },
+            { kingPos.itsRow, little-2 },
+            { 0, kingPos.itsCol },
+            { 0, kingPos.itsCol - 1 },
+            { 0, kingPos.itsCol - 2 },
+            { 0, kingPos.itsCol + 1 },
+            { 0, kingPos.itsCol + 2 },
+            { 1, kingPos.itsCol },
+            { little-1, kingPos.itsCol },
+            { little-1, kingPos.itsCol - 1 },
+            { little-1, kingPos.itsCol - 2 },
+            { little-1, kingPos.itsCol + 1 },
+            { little-1, kingPos.itsCol + 2 },
+            { little-2, kingPos.itsCol },
+    };
 
     for (const Position& pos : swordsPositionsLittle) {
         bLittle[pos.itsRow][pos.itsCol].itsPieceType = SWORD;
@@ -252,19 +252,19 @@ void test_initializeBoard()
 
     // Set positions for shields (defenders)
     Position shieldsPositionsBIG[] = {
-                                      { kingPos.itsRow - 1, kingPos.itsCol },
-                                      { kingPos.itsRow + 1, kingPos.itsCol },
-                                      { kingPos.itsRow, kingPos.itsCol - 1 },
-                                      { kingPos.itsRow, kingPos.itsCol + 1 },
-                                      { kingPos.itsRow - 2, kingPos.itsCol },
-                                      { kingPos.itsRow + 2, kingPos.itsCol },
-                                      { kingPos.itsRow, kingPos.itsCol + 2 },
-                                      { kingPos.itsRow, kingPos.itsCol - 2 },
-                                      { kingPos.itsRow - 3, kingPos.itsCol },
-                                      { kingPos.itsRow + 3, kingPos.itsCol },
-                                      { kingPos.itsRow, kingPos.itsCol - 3 },
-                                      { kingPos.itsRow, kingPos.itsCol + 3 },
-                                      };
+            { kingPos.itsRow - 1, kingPos.itsCol },
+            { kingPos.itsRow + 1, kingPos.itsCol },
+            { kingPos.itsRow, kingPos.itsCol - 1 },
+            { kingPos.itsRow, kingPos.itsCol + 1 },
+            { kingPos.itsRow - 2, kingPos.itsCol },
+            { kingPos.itsRow + 2, kingPos.itsCol },
+            { kingPos.itsRow, kingPos.itsCol + 2 },
+            { kingPos.itsRow, kingPos.itsCol - 2 },
+            { kingPos.itsRow - 3, kingPos.itsCol },
+            { kingPos.itsRow + 3, kingPos.itsCol },
+            { kingPos.itsRow, kingPos.itsCol - 3 },
+            { kingPos.itsRow, kingPos.itsCol + 3 },
+    };
 
     for (const Position& pos : shieldsPositionsBIG) {
         bBig[pos.itsRow][pos.itsCol].itsPieceType = SHIELD;
@@ -272,31 +272,31 @@ void test_initializeBoard()
 
     // Set positions for swords (attackers)
     Position swordsPositionsBIG[] = {
-                                     { kingPos.itsRow, 0 },
-                                     { kingPos.itsRow - 1, 0 },
-                                     { kingPos.itsRow - 2, 0 },
-                                     { kingPos.itsRow + 1, 0 },
-                                     { kingPos.itsRow + 2, 0 },
-                                     { kingPos.itsRow, 1 },
-                                     { kingPos.itsRow, big-1},
-                                     { kingPos.itsRow - 1, big-1 },
-                                     { kingPos.itsRow - 2, big-1 },
-                                     { kingPos.itsRow + 1, big-1 },
-                                     { kingPos.itsRow + 2, big-1 },
-                                     { kingPos.itsRow, big-2 },
-                                     { 0, kingPos.itsCol },
-                                     { 0, kingPos.itsCol - 1 },
-                                     { 0, kingPos.itsCol - 2 },
-                                     { 0, kingPos.itsCol + 1 },
-                                     { 0, kingPos.itsCol + 2 },
-                                     { 1, kingPos.itsCol },
-                                     { big-1, kingPos.itsCol },
-                                     { big-1, kingPos.itsCol - 1 },
-                                     { big-1, kingPos.itsCol - 2 },
-                                     { big-1, kingPos.itsCol + 1 },
-                                     { big-1, kingPos.itsCol + 2 },
-                                     { big-2, kingPos.itsCol },
-                                     };
+            { kingPos.itsRow, 0 },
+            { kingPos.itsRow - 1, 0 },
+            { kingPos.itsRow - 2, 0 },
+            { kingPos.itsRow + 1, 0 },
+            { kingPos.itsRow + 2, 0 },
+            { kingPos.itsRow, 1 },
+            { kingPos.itsRow, big-1},
+            { kingPos.itsRow - 1, big-1 },
+            { kingPos.itsRow - 2, big-1 },
+            { kingPos.itsRow + 1, big-1 },
+            { kingPos.itsRow + 2, big-1 },
+            { kingPos.itsRow, big-2 },
+            { 0, kingPos.itsCol },
+            { 0, kingPos.itsCol - 1 },
+            { 0, kingPos.itsCol - 2 },
+            { 0, kingPos.itsCol + 1 },
+            { 0, kingPos.itsCol + 2 },
+            { 1, kingPos.itsCol },
+            { big-1, kingPos.itsCol },
+            { big-1, kingPos.itsCol - 1 },
+            { big-1, kingPos.itsCol - 2 },
+            { big-1, kingPos.itsCol + 1 },
+            { big-1, kingPos.itsCol + 2 },
+            { big-2, kingPos.itsCol },
+    };
 
     for (const Position& pos : swordsPositionsBIG) {
         bBig[pos.itsRow][pos.itsCol].itsPieceType = SWORD;
@@ -364,17 +364,17 @@ void test_getPositionFromInput()
         // Get the position from input
         Position inputPosition = getPositionFromInput();
         if(inputPosition.itsCol == expectedPositions[i].itsCol
-            && inputPosition.itsRow == expectedPositions[i].itsRow)
+           && inputPosition.itsRow == expectedPositions[i].itsRow)
         {
             cout << "PASS \t: " << "Input : \"" << inputStrings[i] << "\" -> " <<
-                "Position : {" << inputPosition.itsRow << ", " << inputPosition.itsCol << "}" << endl << endl;
+                 "Position : {" << inputPosition.itsRow << ", " << inputPosition.itsCol << "}" << endl << endl;
             pass++;
         }
         else
         {
             cout << "FAIL! \t: " << "Input : \"" << inputStrings[i] << "\" -> " <<
-                "\n\tActual Position : {" << inputPosition.itsRow << ", " << inputPosition.itsCol << "}" <<
-                "\n\tExpected Position : {" << expectedPositions[i].itsRow << ", " << expectedPositions[i].itsCol << "}" << endl << endl;
+                 "\n\tActual Position : {" << inputPosition.itsRow << ", " << inputPosition.itsCol << "}" <<
+                 "\n\tExpected Position : {" << expectedPositions[i].itsRow << ", " << expectedPositions[i].itsCol << "}" << endl << endl;
             failed++;
         }
 
@@ -408,21 +408,21 @@ void test_isValidPosition()
 
         // Valid positions to test
         Position validPositionsToTest[] =
-            {
-             {0, 0},
-             {0, size-1},
-             {size-1, 0},
-             {size-1, size-1},
-             };
+                {
+                        {0, 0},
+                        {0, size-1},
+                        {size-1, 0},
+                        {size-1, size-1},
+                };
 
         // Invalid positions to test
         Position invalidPositionsToTest[] =
-            {
-             {-1, 0},
-             {0, -1},
-             {size, 0},
-             {0, size},
-             };
+                {
+                        {-1, 0},
+                        {0, -1},
+                        {size, 0},
+                        {0, size},
+                };
 
         // Test valid positions
         for(Position aPos : validPositionsToTest){
@@ -434,7 +434,7 @@ void test_isValidPosition()
             else
             {
                 cout << "FAIL! \t: " << aPos.itsRow << " " << aPos.itsCol << "\n\tActual invalid position " <<
-                    "\n\tExpected valid position" << endl;
+                     "\n\tExpected valid position" << endl;
                 failed++;
             }
         }
@@ -449,7 +449,7 @@ void test_isValidPosition()
             else
             {
                 cout << "FAIL! \t: " << aPos.itsRow << " " << aPos.itsCol << "\n\tActual valid position " <<
-                    "\n\tExpected invalid position" << endl;
+                     "\n\tExpected invalid position" << endl;
                 failed++;
             }
         }
@@ -487,32 +487,32 @@ void test_isEmptyCell()
 
     // Positions with non-empty cells to test
     Position nonEmptyPositionsToTest[] =
-        {
-            {0, 0},
-            {0, 1},
-            {0, 2},
-            {1, 0},
-            {2, 0}
-        };
+            {
+                    {0, 0},
+                    {0, 1},
+                    {0, 2},
+                    {1, 0},
+                    {2, 0}
+            };
 
     // Positions with empty cells to test
     Position emptyPositionsToTest[] =
-        {
-            {0, 3},
-            {1, 1},
-            {2, 1}
-        };
+            {
+                    {0, 3},
+                    {1, 1},
+                    {2, 1}
+            };
 
     // Expected results for each position
     string posToTest[] = {
-        "A1 -> NORMAL / SWORD",
-        "A2 -> NORMAL / SHIELD",
-        "A3 -> NORMAL / KING",
-        "B1 -> FORTRESS / KING",
-        "C1 -> CASTLE / KING",
-        "A4 -> NORMAL / NONE",
-        "B2 -> FORTRESS / NONE",
-        "C2 -> CASTLE / NONE"
+            "A1 -> NORMAL / SWORD",
+            "A2 -> NORMAL / SHIELD",
+            "A3 -> NORMAL / KING",
+            "B1 -> FORTRESS / KING",
+            "C1 -> CASTLE / KING",
+            "A4 -> NORMAL / NONE",
+            "B2 -> FORTRESS / NONE",
+            "C2 -> CASTLE / NONE"
     };
 
     int nTest = 0; // Test counter
@@ -525,7 +525,7 @@ void test_isEmptyCell()
         else
         {
             cout << "FAIL! \t: " << posToTest[nTest++] << "\n\tActual is empty " <<
-                "\n\tExpected is not empty" << endl;
+                 "\n\tExpected is not empty" << endl;
             failed++;
         }
     }
@@ -539,7 +539,7 @@ void test_isEmptyCell()
         else
         {
             cout << "FAIL! \t: " << posToTest[nTest++] << "\n\tActual is not empty " <<
-                "\n\tExpected is empty" << endl;
+                 "\n\tExpected is empty" << endl;
             failed++;
         }
     }
@@ -1363,10 +1363,10 @@ void test_getKingPosition()
 
         // Positions to compare the king's position with
         Position posToCompares[] = {
-            { (size - 1) / 2, (size - 1) / 2 },  // Middle of the board
-            {0, 0},                              // Top-left corner
-            {size - 1, 7},                       // Rightmost column, bottom row
-            {4, 4}                               // Custom position
+                { (size - 1) / 2, (size - 1) / 2 },  // Middle of the board
+                {0, 0},                              // Top-left corner
+                {size - 1, 7},                       // Rightmost column, bottom row
+                {4, 4}                               // Custom position
         };
 
         // Initialize the board and test for each position
@@ -1428,8 +1428,8 @@ void test_isKingEscaped()
 
         // Positions where the king has not escaped
         Position posKingNotEscaped[] = {
-            {(size-1)/2, (size-1)/2},  // Middle of the board
-            {3, 3}                     // Custom position
+                {(size-1)/2, (size-1)/2},  // Middle of the board
+                {3, 3}                     // Custom position
         };
 
         for(Position pos : posKingNotEscaped)
@@ -1455,10 +1455,10 @@ void test_isKingEscaped()
 
         // Positions where the king has escaped
         Position posKingEscaped[] = {
-            {0, 0},                 // Top-left corner
-            {size-1, 0},            // Top-right corner
-            {size-1, size-1},       // Bottom-right corner
-            {0, size-1}             // Bottom-left corner
+                {0, 0},                 // Top-left corner
+                {size-1, 0},            // Top-right corner
+                {size-1, size-1},       // Bottom-right corner
+                {0, size-1}             // Bottom-left corner
         };
 
         for(Position pos : posKingEscaped)

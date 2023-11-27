@@ -21,11 +21,7 @@ So we don't know the exact rules.
 
 ### Executing program
 
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
+
 
 ## Help
 
@@ -34,7 +30,7 @@ Any help please contact me.
 Email
 ```
 
-## Authors
+## Author(s)
 
 Adam Glover
 
@@ -43,10 +39,11 @@ Adam Glover
 * 0.1
     * Present the game board
 * 0.2
+    * Playable game
 
 ## License
 
-None for now
+This project is licensed under the GNU General Public License - see the LICENSE.md file for details
 
 ## Acknowledgments
 

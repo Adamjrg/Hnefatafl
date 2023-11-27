@@ -95,6 +95,17 @@ void playGame()
 
     }
 
+    cout << "Would you like to play again? Yes or No (Y,N)" << endl;
+    char answer;
+    cin.clear();
+    cin >> answer;
+    if (answer == 'Y' || answer == 'y') {
+        playGame();
+    }
+    else {
+        cout << "Thanks for playing!" << endl;
+    }
+
 
 
 }

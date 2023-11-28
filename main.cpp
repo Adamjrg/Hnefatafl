@@ -26,45 +26,79 @@ void playGame()
 {
     // Display the game logo
     displayHnefataflLogo();
-
-    // Ask the user to choose the size of the game board
     BoardSize boardSize;
-    bool validInput = chooseSizeBoard(boardSize);
-    while (!validInput) {
-        cout << "Invalid input, please try again" << endl;
+    Cell board[BOARD_SIZE_MAX][BOARD_SIZE_MAX];
+    bool loaded = false;
+
+    if (isSaveFileExists()) {
+        cout << "A save file has been found, do you want to resume the game? Yes or No (Y,N)" << endl;
+        char answer;
         cin.clear();
-        cin.ignore(255, '\n');
-        validInput = chooseSizeBoard(boardSize);
+        cin >> answer;
+        if (answer == 'Y' || answer == 'y') {
+            boardSize = loadBoard(board);
+            clearConsole();
+            displayBoard(board, boardSize);
+            loaded = true;
+        } else {
+            clearConsole();
+            deleteSaveFile();
+        }
     }
 
-    // Initialize the game board
-    Cell board[BOARD_SIZE_MAX][BOARD_SIZE_MAX];
-    initializeBoard(board, boardSize);
+    // Ask the user to choose the size of the game board
+    if (!loaded) {
+        bool validInput = chooseSizeBoard(boardSize);
+        while (!validInput) {
+            cout << "Invalid input, please try again" << endl;
+            cin.clear();
+            cin.ignore(255, '\n');
+            validInput = chooseSizeBoard(boardSize);
+        }
 
-    // Display the game board
-    displayBoard(board, boardSize);
+        // Initialize the game board
 
+
+        //If a save file exists, ask the user if he wants to resume the game
+        initializeBoard(board, boardSize);
+
+        // Clear the console
+        clearConsole();
+
+        // Display the game board
+        displayBoard(board, boardSize);
+    }
     //Game loop
     bool isGameOver = false;
     PlayerRole playerRole = ATTACK;
+
+
     //Ask the user to play a move
     while (!isGameOver) {
 
-        cout << "Player " << playerRole << " turn" << endl;
-        Position fromPosition;
-        Position toPosition;
+        cout << "Player " << (playerRole == 0 ? "ATTACK" : "DEFENCE") << " turn" << endl;
+        Position fromPosition = { -1,-1 };
+        Position toPosition = { -1,-1 };
         do {
             fromPosition = getPositionFromInput();
-            toPosition = getPositionFromInput();
-            cin.clear();
-            cin.ignore(255, '\n');
+            if (!isEmptyCell(board,fromPosition)) {
+                clearConsole();
+                displayChosenPieceBoard(board, boardSize, fromPosition);
+                toPosition = getPositionFromInput();
+                cin.clear();
+                cin.ignore(255, '\n');
+            }
         } while (!isValidMovement(playerRole, board, fromPosition, toPosition)|| !isValidPosition(toPosition, boardSize));
 
+        clearConsole();
         //Move the piece
         movePiece(board, fromPosition, toPosition);
 
         //Check if pieces are captured
         capturePieces(playerRole, board, boardSize, toPosition);
+
+        //Display the board
+        displayBoard(board, boardSize);
 
         //Check if swords left are 0
         if (isSwordLeft(board, boardSize) == 0) {
@@ -88,13 +122,19 @@ void playGame()
             cout << "There is no more sword, the defenders win !" << endl;
         }
 
-        //Display the board
-        displayBoard(board, boardSize);
+
         //Change the player
         (playerRole == ATTACK) ? playerRole = DEFENSE : playerRole = ATTACK;
 
+        //Save board to a file in case of crash, to be able to resume the game
+        saveBoard(board, boardSize);
+
     }
 
+    //delete the save file
+    deleteSaveFile();
+
+    //Ask the user if he wants to play again
     cout << "Would you like to play again? Yes or No (Y,N)" << endl;
     char answer;
     cin.clear();
@@ -117,8 +157,10 @@ void playGame()
 */
 void launchTests(){
     cout << endl << "********* Start testing *********" << endl << endl;
+    test_isValidMovement();
     //test_getPositionFromInput();
     //test_isKingCaptured();
+    //test_isKingCapturedV2();
     cout << endl << "********** End testing **********" << endl << endl;
 }
 

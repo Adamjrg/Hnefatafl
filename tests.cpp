@@ -1783,7 +1783,7 @@ void test_isKingCapturedV2()
         failed++;
     }
 
-    // Scenario: Not captured if closed by a combination of attackers, a fortress, and a FORTRESS but with an empty space
+    // Scenario: Not captured if closed by a combination of attackers, a fortress, and a CASTLE but with an empty space
     resetBoard(b,size);
     b[2][2].itsPieceType = KING;
     b[1][2].itsPieceType = SHIELD;
@@ -1817,7 +1817,7 @@ void test_isKingCapturedV2()
         failed++;
     }
 
-    // Scenario: Captured if closed by a combination of attackers, a fortress, and a FORTRESS
+    // Scenario: Captured if closed by a combination of attackers, a fortress, and a CASTLE
     resetBoard(b,size);
     b[2][2].itsPieceType = KING;
     b[1][2].itsPieceType = SHIELD;
@@ -1849,6 +1849,31 @@ void test_isKingCapturedV2()
     else
     {
         cout << "FAIL! \t: " << "\n\tActual king is not captured ! " << "\n\texpected king is captured !" << endl;
+        failed++;
+    }
+
+
+    resetBoard(b,size);
+    b[2][2].itsPieceType = KING;
+    b[1][2].itsPieceType = SWORD;
+    b[3][2].itsPieceType = SHIELD;
+    b[4][2].itsPieceType = SWORD;
+    b[3][3].itsPieceType = SWORD;
+    b[3][1].itsPieceType = SWORD;
+    b[2][1].itsPieceType = SWORD;
+    b[2][3].itsPieceType = SWORD;
+
+    displayBoard(b,size);
+
+    // Check if the king is not captured
+    if(isKingCaptured(b,size))
+    {
+        cout << "PASS \t: " << "king is captured !" << endl << endl;
+        pass++;
+    }
+    else
+    {
+        cout << "FAIL! \t: " << "\n\tActual king not captured ! " << "\n\texpected king is captured !" << endl;
         failed++;
     }
 

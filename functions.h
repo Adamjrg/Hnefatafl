@@ -214,4 +214,59 @@ bool isKingCaptured(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoard
 bool isKingCapturedV2(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, Position aKingPos = {-1, -1});
 
 
+/**
+ * @brief Save the board to a file.
+ *
+ * This function saves the board to a file in case of crash, to be able to resume the game.
+ *
+ * @param aBoard The game board represented as a 2D array of Cell structures.
+ * @param aBoardSize The size of the game board.
+ */
+void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize);
+
+
+/**
+ * @brief Load the board from a file.
+ *
+ * This function loads the board from a file in case of crash, to be able to resume the game.
+ *
+ * @param aBoard The game board represented as a 2D array of Cell structures.
+ *
+ * @return The size of the board.
+ */
+BoardSize loadBoard(Cell aBoard[][BOARD_SIZE_MAX]);
+
+
+/**
+ * @brief Check if a save file exists.
+ *
+ * This function checks if a save file exists.
+ *
+ * @return True if the save file exists, false otherwise.
+ */
+bool isSaveFileExists();
+
+
+
+/**
+ * @brief Delete the save file.
+ *
+ * This function deletes the save file.
+ *
+ */
+void deleteSaveFile();
+
+
+/**
+ * @brief Display the board with the chosen piece.
+ *
+ * This function displays the board with the chosen piece.
+ *
+ * @param aBoard The game board represented as a 2D array of Cell structures.
+ * @param aBoardSize The size of the game board.
+ * @param aPos The position of the chosen piece.
+ */
+void displayChosenPieceBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const Position& aPos);
+
+
 #endif // FUNCTIONS_H

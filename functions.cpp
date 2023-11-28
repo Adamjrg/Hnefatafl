@@ -20,6 +20,7 @@
  */
 
 #include <iostream>
+#include <fstream>
 
 #include "typeDef.h"
 #include "functions.h"
@@ -156,6 +157,7 @@ void initializeBoard(Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize)
 }
 
 void displayBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize) {
+    cout << "    King: " << KING_CHAR << "      Shield:" << WHITE_CHAR << "      Sword:" << BLACK_CHAR << "     Fortress:O" << "     Castle:X"  <<endl;
     cout << " ";
     for(short int i = 1; i <= aBoardSize; i++) {
         cout << (i > 10 ? "    " : "     ") <<BLUE_BOLD << i << RESET;
@@ -495,6 +497,168 @@ bool isKingCaptured(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoard
     return false;
 }
 
-bool isKingCapturedV2(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, Position aKingPos) {
-    return false;
+
+bool isKingCapturedV2(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, Position aKingPos)
+{
+    // Check if the given position is out of bounds
+    if (aKingPos.itsRow < 0 || aKingPos.itsRow >= aBoardSize || aKingPos.itsCol < 0 || aKingPos.itsCol >= aBoardSize) {
+        return false;
+    }
+
+    // Check if the king is on a fortress or castle cell
+    if (aBoard[aKingPos.itsRow][aKingPos.itsCol].itsCellType == FORTRESS || aBoard[aKingPos.itsRow][aKingPos.itsCol].itsCellType == CASTLE) {
+        return true;
+    }
+
+    // Check if the king is captured by attackers in adjacent cells
+    if (aBoard[aKingPos.itsRow][aKingPos.itsCol].itsPieceType == KING) {
+        // Check in all eight possible directions
+        for (int i = -1; i <= 1; ++i) {
+            for (int j = -1; j <= 1; ++j) {
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+
+                // Calculate the adjacent position
+                Position adjPos = {aKingPos.itsRow + i, aKingPos.itsCol + j};
+
+                // Check if the adjacent position is within bounds
+                if (adjPos.itsRow >= 0 && adjPos.itsRow < aBoardSize && adjPos.itsCol >= 0 && adjPos.itsCol < aBoardSize) {
+                    if (aBoard[adjPos.itsRow][adjPos.itsCol].itsPieceType == SWORD || aBoard[adjPos.itsRow][adjPos.itsCol].itsPieceType == SHIELD) {
+                        // Recursively check if the king is captured from the adjacent cell
+                        if (!isKingCapturedV2(aBoard, aBoardSize, adjPos)) {
+                            return false;  // King is not captured
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;  // King is captured by attackers
+    }
+
+    return false;  // King is not in a valid position
 }
+
+
+void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize) {
+    ofstream oFile("C:\\temp\\save.txt");
+
+    // Check if the file was opened successfully
+    if (oFile.is_open()) {
+        // Write the board size to the file
+        oFile << aBoardSize << endl;
+
+        // Write the board contents to the file
+        for (short int i = 0; i < aBoardSize; ++i) {
+            for (short int j = 0; j < aBoardSize; ++j) {
+                oFile << aBoard[i][j].itsCellType << " " << aBoard[i][j].itsPieceType << endl;
+            }
+        }
+
+        // Close the file
+        oFile.close();
+    }
+}
+
+BoardSize loadBoard(Cell aBoard[][BOARD_SIZE_MAX]) {
+    ifstream iFile("C:\\temp\\save.txt");
+
+    int size = 0;
+    // Check if the file was opened successfully
+    if (iFile.is_open()) {
+        // Read the board size from the file
+
+        iFile >> size;
+
+        // Read the board contents from the file
+        int cell = 0;
+        int piece = 0;
+        for (short int i = 0; i < size; ++i) {
+            for (short int j = 0; j < size; ++j) {
+                iFile >> cell >> piece;
+                aBoard[i][j].itsCellType = static_cast<CellType>(cell);
+                aBoard[i][j].itsPieceType = static_cast<PieceType>(piece);
+            }
+        }
+
+        // Close the file
+        iFile.close();
+        cout << "The game was loaded successfully." << endl;
+    }
+    return size == 11 ? LITTLE : BIG;
+}
+
+bool isSaveFileExists() {
+    ifstream iFile("C:\\temp\\save.txt");
+    return iFile.good();
+}
+
+void deleteSaveFile() {
+    remove("C:\\temp\\save.txt");
+}
+
+
+void displayChosenPieceBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const Position& aPos) {
+    cout << "    King: " << KING_CHAR << "      Shield:" << WHITE_CHAR << "      Sword:" << BLACK_CHAR << "     Fortress:O" << "     Castle:X"  <<endl;
+    cout << " ";
+    for(short int i = 1; i <= aBoardSize; i++) {
+        cout << (i > 10 ? "    " : "     ") <<BLUE_BOLD << i << RESET;
+    }
+    cout << endl;
+
+
+    char start = 'A';
+    for(short int i = 1; i <= aBoardSize; i++) {
+        cout << "   ";
+        for(short int j = 1; j < aBoardSize+1; j++) {
+            cout << "+-----";
+        }
+        cout << "+";
+        cout << endl;
+        cout <<BLUE_BOLD<< char(start-1+i) << RESET;
+        for(short int j = 0; j < aBoardSize; j++) {
+            if (aBoard[i-1][j].itsPieceType == NONE && aBoard[i-1][j].itsCellType == NORMAL) {
+                cout << "  |   ";
+            }
+            else if (aBoard[i-1][j].itsPieceType == SWORD) {
+                if (i-1 == aPos.itsRow && j == aPos.itsCol) {
+                    cout << "  |  "<< HIGHLIGHT << BLUE_BOLD << BLACK_CHAR << RESET;
+                } else {
+                    cout << "  |  "<< BLACK_CHAR;
+                }
+            }
+            else if (aBoard[i-1][j].itsPieceType == SHIELD){
+                if (i-1 == aPos.itsRow && j == aPos.itsCol) {
+                    cout << "  |  "<< HIGHLIGHT << BLUE_BOLD << WHITE_CHAR << RESET;
+                } else {
+                    cout << "  |  "<< WHITE_CHAR;
+                }
+            }
+            else if (aBoard[i-1][j].itsPieceType == KING){
+                if (i-1 == aPos.itsRow && j == aPos.itsCol) {
+                    cout << "  |  "<< HIGHLIGHT << BLUE_BOLD << KING_CHAR << RESET;
+                } else {
+                    cout << "  |  "<< KING_CHAR;
+                }
+            }
+            else if (aBoard[i-1][j].itsCellType == CASTLE){
+                cout << "  |  "<< "X";
+            }
+            else if (aBoard[i-1][j].itsCellType == FORTRESS){
+                cout << "  |  "<< "O";
+            }
+        }
+        cout << "  |";
+        cout << endl;
+    }
+    cout << "   ";
+    for(short int j = 1; j < aBoardSize+1; j++) {
+        cout << "+-----";
+    }
+    cout << "+";
+    cout << endl;
+}
+
+
+

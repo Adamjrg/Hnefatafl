@@ -28,6 +28,7 @@ void playGame()
     displayHnefataflLogo();
     BoardSize boardSize;
     Cell board[BOARD_SIZE_MAX][BOARD_SIZE_MAX];
+    PlayerRole playerRole = ATTACK;
     bool loaded = false;
 
     if (isSaveFileExists()) {
@@ -36,7 +37,7 @@ void playGame()
         cin.clear();
         cin >> answer;
         if (answer == 'Y' || answer == 'y') {
-            boardSize = loadBoard(board);
+            loadBoard(board, boardSize, playerRole);
             clearConsole();
             displayBoard(board, boardSize);
             loaded = true;
@@ -67,8 +68,6 @@ void playGame()
     }
     //Game loop
     bool isGameOver = false;
-    PlayerRole playerRole = ATTACK;
-
 
     //Ask the user to play a move
     while (!isGameOver) {
@@ -125,7 +124,7 @@ void playGame()
         (playerRole == ATTACK) ? playerRole = DEFENSE : playerRole = ATTACK;
 
         //Save board to a file in case of crash, to be able to resume the game
-        saveBoard(board, boardSize);
+        saveBoard(board, boardSize, playerRole);
 
     }
 

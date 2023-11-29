@@ -221,8 +221,9 @@ bool isKingCapturedV2(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoa
  *
  * @param aBoard The game board represented as a 2D array of Cell structures.
  * @param aBoardSize The size of the game board.
+ * @param aPlayerRole The role of the player.
  */
-void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize);
+void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const PlayerRole& aPlayerRole);
 
 
 /**
@@ -231,10 +232,11 @@ void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize)
  * This function loads the board from a file in case of crash, to be able to resume the game.
  *
  * @param aBoard The game board represented as a 2D array of Cell structures.
+ * @param aBoardSize The size of the board.
+ * @param aPlayerRole The role of the player.
  *
- * @return The size of the board.
  */
-BoardSize loadBoard(Cell aBoard[][BOARD_SIZE_MAX]);
+void loadBoard(Cell aBoard[][BOARD_SIZE_MAX], BoardSize& aBoardSize, PlayerRole& aPlayerRole);
 
 
 /**

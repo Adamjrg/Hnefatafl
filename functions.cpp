@@ -542,13 +542,14 @@ bool isKingCapturedV2(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoa
 }
 
 
-void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize) {
+void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const PlayerRole& aPlayer) {
     ofstream oFile("C:\\temp\\save.txt");
 
     // Check if the file was opened successfully
     if (oFile.is_open()) {
         // Write the board size to the file
         oFile << aBoardSize << endl;
+        oFile << aPlayer << endl;
 
         // Write the board contents to the file
         for (short int i = 0; i < aBoardSize; ++i) {
@@ -562,15 +563,19 @@ void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize)
     }
 }
 
-BoardSize loadBoard(Cell aBoard[][BOARD_SIZE_MAX]) {
+void loadBoard(Cell aBoard[][BOARD_SIZE_MAX], BoardSize & boardSize, PlayerRole & playerRole) {
     ifstream iFile("C:\\temp\\save.txt");
 
     int size = 0;
+    int player = 0;
     // Check if the file was opened successfully
     if (iFile.is_open()) {
         // Read the board size from the file
 
         iFile >> size;
+        iFile >> player;
+        size == 11 ? boardSize = LITTLE : boardSize = BIG;
+        player == 0 ? playerRole = ATTACK : playerRole = DEFENSE;
 
         // Read the board contents from the file
         int cell = 0;
@@ -587,7 +592,7 @@ BoardSize loadBoard(Cell aBoard[][BOARD_SIZE_MAX]) {
         iFile.close();
         cout << "The game was loaded successfully." << endl;
     }
-    return size == 11 ? LITTLE : BIG;
+
 }
 
 bool isSaveFileExists() {

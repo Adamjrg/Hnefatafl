@@ -52,14 +52,10 @@ void playGame()
         while (!validInput) {
             cout << "Invalid input, please try again" << endl;
             cin.clear();
-            cin.ignore(255, '\n');
             validInput = chooseSizeBoard(boardSize);
         }
 
         // Initialize the game board
-
-
-        //If a save file exists, ask the user if he wants to resume the game
         initializeBoard(board, boardSize);
 
         // Clear the console
@@ -84,10 +80,11 @@ void playGame()
             if (!isEmptyCell(board,fromPosition)) {
                 clearConsole();
                 displayChosenPieceBoard(board, boardSize, fromPosition);
-                toPosition = getPositionFromInput();
                 cin.clear();
-                cin.ignore(255, '\n');
+                toPosition = getPositionFromInput();
             }
+            clearConsole();
+            displayBoard(board, boardSize);
         } while (!isValidMovement(playerRole, board, fromPosition, toPosition)|| !isValidPosition(toPosition, boardSize));
 
         clearConsole();

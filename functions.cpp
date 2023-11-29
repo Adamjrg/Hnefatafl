@@ -212,6 +212,7 @@ Position getPositionFromInput() {
     cout << "Enter the position (e.g. A1): ";
     cin >> row >> col;
     string extra;
+    cin.clear();
     getline(cin, extra);
 
     row = toupper(row);

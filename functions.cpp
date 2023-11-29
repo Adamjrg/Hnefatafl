@@ -543,7 +543,7 @@ bool isKingCapturedV2(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoa
 
 
 void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const PlayerRole& aPlayer) {
-    ofstream oFile("C:\\temp\\save.txt");
+    ofstream oFile("C:\\Windows\\Temp\\save.txt");
 
     // Check if the file was opened successfully
     if (oFile.is_open()) {
@@ -564,7 +564,7 @@ void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize,
 }
 
 void loadBoard(Cell aBoard[][BOARD_SIZE_MAX], BoardSize & boardSize, PlayerRole & playerRole) {
-    ifstream iFile("C:\\temp\\save.txt");
+    ifstream iFile("C:\\Windows\\Temp\\save.txt");
 
     int size = 0;
     int player = 0;
@@ -596,12 +596,12 @@ void loadBoard(Cell aBoard[][BOARD_SIZE_MAX], BoardSize & boardSize, PlayerRole 
 }
 
 bool isSaveFileExists() {
-    ifstream iFile("C:\\temp\\save.txt");
+    ifstream iFile("C:\\Windows\\Temp\\save.txt");
     return iFile.good();
 }
 
 void deleteSaveFile() {
-    remove("C:\\temp\\save.txt");
+    remove("C:\\Windows\\Temp\\save.txt");
 }
 
 

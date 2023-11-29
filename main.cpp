@@ -52,6 +52,7 @@ void playGame()
         while (!validInput) {
             cout << "Invalid input, please try again" << endl;
             cin.clear();
+            cin.ignore(10000, '\n');
             validInput = chooseSizeBoard(boardSize);
         }
 

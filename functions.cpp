@@ -54,14 +54,124 @@ void clearConsole()
 
 
 void displayHnefataflLogo(){
-    cout << " _   _             __      _         __ _ " << endl;
-    cout << "| | | |           / _|    | |       / _| |" << endl;
-    cout << "| |_| |_ __   ___| |_ __ _| |_ __ _| |_| |" << endl;
-    cout << "|  _  | '_ "<< "\\" << " / _ "<< "\\"<<"  _/ _` | __/ _` |  _| |" << endl;
-    cout << "| | | | | | |  __/ || (_| | || (_| | | | |" << endl;
-    cout << "\\"<<"_| |_/_| |_|"<<"\\"<<"___|_| "<<"\\"<<"__,_|"<<"\\"<<"__"<<"\\"<<"__,_|_| |_|" << endl;
+    cout << R"(
+     _   _             __      _         __ _
+    | | | |           / _|    | |       / _| |
+    | |_| |_ __   ___| |_ __ _| |_ __ _| |_| |
+    |  _  | '_  \/ _ \  _/ _` | __/ _` |  _| |
+    | | | | | | |  __/ || (_| | || (_| | | | |
+    \_| |_/_| |_|\___|_| \__,_|\__\__,_|_| |_|)" << endl;
     cout << endl;
-    cout << "Welcome to Hnefatafl" << endl;
+    cout << "Welcome to "<< BLUE_BOLD <<"Hnefatafl" << RESET << ", coded by " << BLUE_BOLD <<  "GLOVER Adam D2" << RESET << endl;
+}
+
+int displayMenu() {
+    cout << R"(
+---------------------------------------------⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀
+    ⠀⢠⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⡄⠀
+    ⠀⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⠀
+    ⠀⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⠀
+    ⠀⢹⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⠀⢠⣴⣦⡄⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⡏⠀      1. New Game
+    ⠀⠀⢿⣿⣿⡿⠋⣠⡶⠀⣠⣴⡆⠠⢤⡤⠄⢰⣦⣄⠀⢶⣄⠙⢿⣿⣿⡿⠀⠀      2. Load Game
+    ⠀⠀⠈⢿⠋⣠⡾⠋⣠⣾⣿⣿⡇⢰⣤⣤⡆⢸⣿⣿⣷⣄⠙⢷⣄⠙⡿⠁⠀⠀      3. Rules
+    ⠀⠀⠀⠀⣴⠏⢠⣾⣿⣿⣿⣿⡇⠸⠿⠿⠇⢸⣿⣿⣿⣿⣷⡄⠹⣦⠀⠀⠀⠀      4. Quit
+    ⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⡇⠀⠒⠒⠀⢸⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⡇⢸⣿⣿⡇⢸⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠛⠛⠛⠛⠛⠛⠛⠛⠃⠈⣉⣉⠁⠘⠛⠛⠛⠛⠛⠛⠛⠛⠀⠀⠀⠀
+    ⠀⠀⠀⠀⢿⠀⠾⣿⠷⠀⣿⣿⡇⢀⣉⣉⡀⢸⣿⣿⠀⠾⣿⠷⠀⡿⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+---------------------------------------------⠀⠀⠀⠀⠀
+Enter your choice:)" << endl;
+    int choice = 0;
+    cin.clear();
+    cin >> choice;
+    return choice;
+}
+
+void newGame(BoardSize &aBoardSize, Cell aBoard[][BOARD_SIZE_MAX], bool &ai) {
+    cout << "Do you want to play against an AI? Yes or No (Y,N)" << endl;
+    char answerAI;
+    cin.clear();
+    cin >> answerAI;
+    if (answerAI == 'Y' || answerAI == 'y') {
+        ai = true;
+    }
+    else {
+        ai = false;
+    }
+
+    bool validInput = chooseSizeBoard(aBoardSize);
+    while (!validInput) {
+        cout << "Invalid input, please try again" << endl;
+        cin.clear();
+        cin.ignore(10000, '\n');
+        validInput = chooseSizeBoard(aBoardSize);
+    }
+
+    // Initialize the game board
+    initializeBoard(aBoard, aBoardSize);
+
+    // Clear the console
+    clearConsole();
+
+    // Display the game board
+    displayBoard(aBoard, aBoardSize);
+}
+
+void displayRules() {
+    clearConsole();
+    cout << BOLD_RED << "Setup:" << RESET << endl;
+    cout << "The game is played on a square board with a grid of 11x11 or 13x13 squares." << endl;
+    cout << "The central square is the throne, and the four corner squares are the escape squares." << endl;
+    cout
+            << "The defenders, represented by white pieces, set up in a cross-shaped formation around the king on the central square."
+            << endl;
+    cout << "The attackers, represented by black pieces, surround the defenders on all sides." << endl;
+    cout << endl;
+    cout << BOLD_RED << "Movement:" << RESET << endl;
+    cout
+            << "The king moves like the other pieces, vertically or horizontally (not diagonally)."
+            << endl;
+    cout
+            << "All other pieces, both attackers and defenders, move like chess rooks (horizontally or vertically) and capture by surrounding an opponent's piece on two opposite sides (horizontally or vertically)."
+            << endl;
+    cout << endl;
+    cout << BOLD_RED << "Objective:" << RESET << endl;
+    cout << "The attackers win by capturing the defender's king, surrounding it on all four sides." << endl;
+    cout
+            << "The defenders win by moving their king to one of the corner squares (escape squares) or by blocking the attackers' movement until they can't make a legal move."
+            << endl;
+    cout << endl;
+    cout << BOLD_RED << "Capture Rules:" << RESET << endl;
+    cout
+            << "To capture an opponent's piece, you must sandwich it between two of your own pieces along a horizontal or vertical line."
+            << endl;
+    cout << "The king can be used to make captures just like other pieces." << endl;
+    cout << endl;
+    cout << BOLD_RED << "Turns and Gameplay:" << RESET << endl;
+    cout << "Players take turns, starting with the attackers." << endl;
+    cout << "The player must move one of their pieces on their turn." << endl;
+    cout << "A player can't move through or onto a square occupied by their own piece." << endl;
+    cout << endl;
+    cout << BOLD_RED << "Winning:" << RESET << endl;
+    cout << "If the attackers capture the king, they win." << endl;
+    cout
+            << "If the defenders move their king to one of the corner squares or create a situation where the attackers can't make a legal move, they win."
+            << endl;
+    cout << endl;
+    cout << BOLD_RED << "Stalemate:" << RESET << endl;
+    cout
+            << "If a position repeats three times without any progress (same pieces in the same positions), the game is a draw."
+            << endl;
+    cout << endl;
+    cout
+            << "These are the fundamental rules of Hnefatafl. The game combines strategy and tactics, and the balance between the attackers and defenders makes for an intriguing and challenging board game."
+            << endl;
+    cout << "Press Enter to continue..." << endl;
+    cin.clear();
+    cin.ignore(255, '\n');
+    getchar();
 }
 
 
@@ -542,7 +652,7 @@ bool isKingCapturedV2(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoa
 }
 
 
-void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const PlayerRole& aPlayer) {
+void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const PlayerRole& aPlayer, const bool& isAi) {
     ofstream oFile("C:\\Windows\\Temp\\save.txt");
 
     // Check if the file was opened successfully
@@ -550,6 +660,7 @@ void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize,
         // Write the board size to the file
         oFile << aBoardSize << endl;
         oFile << aPlayer << endl;
+        oFile << isAi << endl;
 
         // Write the board contents to the file
         for (short int i = 0; i < aBoardSize; ++i) {
@@ -563,7 +674,7 @@ void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize,
     }
 }
 
-void loadBoard(Cell aBoard[][BOARD_SIZE_MAX], BoardSize & boardSize, PlayerRole & playerRole) {
+void loadBoard(Cell aBoard[][BOARD_SIZE_MAX], BoardSize & boardSize, PlayerRole & playerRole, bool & isVsAI) {
     ifstream iFile("C:\\Windows\\Temp\\save.txt");
 
     int size = 0;
@@ -574,6 +685,7 @@ void loadBoard(Cell aBoard[][BOARD_SIZE_MAX], BoardSize & boardSize, PlayerRole 
 
         iFile >> size;
         iFile >> player;
+        iFile >> isVsAI;
         size == 11 ? boardSize = LITTLE : boardSize = BIG;
         player == 0 ? playerRole = ATTACK : playerRole = DEFENSE;
 
@@ -666,5 +778,218 @@ void displayChosenPieceBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSiz
     cout << endl;
 }
 
+bool isValidMovementSilent(const PlayerRole& aPlayer, const Cell aBoard[][BOARD_SIZE_MAX],const Position& aStartPos,const Position& aEndPos) {
+    //Check if the start position is empty
+    if (isEmptyCell(aBoard, aStartPos)) {
+        return false;
+    }
+
+    //Check if the piece belongs to the player
+    if (aPlayer == ATTACK && aBoard[aStartPos.itsRow][aStartPos.itsCol].itsPieceType != SWORD) {
+        return false;
+    }
+    else if (aPlayer == DEFENSE && aBoard[aStartPos.itsRow][aStartPos.itsCol].itsPieceType != SHIELD && aBoard[aStartPos.itsRow][aStartPos.itsCol].itsPieceType != KING) {
+        return false;
+    }
+
+    //Check if the end position is empty
+    if (!isEmptyCell(aBoard, aEndPos)) {
+        return false;
+    }
+
+    //Check if the move is along the same row or column
+    if (aStartPos.itsRow != aEndPos.itsRow && aStartPos.itsCol != aEndPos.itsCol) {
+        return false;
+    }
+
+    //Check if only the king can go on the fortress
+    if (aBoard[aEndPos.itsRow][aEndPos.itsCol].itsCellType == FORTRESS && aBoard[aStartPos.itsRow][aStartPos.itsCol].itsPieceType != KING) {
+        return false;
+    }
+
+    //Check if only the king can pass on the castle
+    if (aBoard[aEndPos.itsRow][aEndPos.itsCol].itsCellType == CASTLE && aBoard[aStartPos.itsRow][aStartPos.itsCol].itsPieceType != KING) {
+        return false;
+    }
+
+    //Check if there is the castle in the path
+    if (aStartPos.itsRow == aEndPos.itsRow && aBoard[aStartPos.itsRow][aStartPos.itsCol].itsPieceType != KING) {
+        //Check left
+        if (aStartPos.itsCol > aEndPos.itsCol) {
+            for (short int i = aStartPos.itsCol-1; i > aEndPos.itsCol; i--) {
+                if (aBoard[aStartPos.itsRow][i].itsCellType == CASTLE) {
+                    return false;
+                }
+            }
+        }
+            //Check right
+        else {
+            for (short int i = aStartPos.itsCol+1; i < aEndPos.itsCol; i++) {
+                if (aBoard[aStartPos.itsRow][i].itsCellType == CASTLE) {
+                    return false;
+                }
+            }
+        }
+    }
+    else if (aStartPos.itsCol == aEndPos.itsCol && aBoard[aStartPos.itsRow][aStartPos.itsCol].itsPieceType != KING) {
+        //Check up
+        if (aStartPos.itsRow > aEndPos.itsRow) {
+            for (short int i = aStartPos.itsRow-1; i > aEndPos.itsRow; i--) {
+                if (aBoard[i][aStartPos.itsCol].itsCellType == CASTLE) {
+                    return false;
+                }
+            }
+        }
+            //Check down
+        else {
+            for (short int i = aStartPos.itsRow+1; i < aEndPos.itsRow; i++) {
+                if (aBoard[i][aStartPos.itsCol].itsCellType == CASTLE) {
+                    return false;
+                }
+            }
+        }
+    }
 
 
+    //Check if there is a piece in the path
+    if (aStartPos.itsRow == aEndPos.itsRow) {
+        //Check left
+        if (aStartPos.itsCol > aEndPos.itsCol) {
+            for (short int i = aStartPos.itsCol-1; i > aEndPos.itsCol; i--) {
+                if (!isEmptyCell(aBoard, {aStartPos.itsRow, i})) {
+                    return false;
+                }
+            }
+        }
+            //Check right
+        else {
+            for (short int i = aStartPos.itsCol+1; i < aEndPos.itsCol; i++) {
+                if (!isEmptyCell(aBoard, {aStartPos.itsRow, i})) {
+                    return false;
+                }
+            }
+        }
+    }
+    else if (aStartPos.itsCol == aEndPos.itsCol) {
+        //Check up
+        if (aStartPos.itsRow > aEndPos.itsRow) {
+            for (short int i = aStartPos.itsRow-1; i > aEndPos.itsRow; i--) {
+                if (!isEmptyCell(aBoard, {i, aStartPos.itsCol})) {
+                    return false;
+                }
+            }
+        }
+            //Check down
+        else {
+            for (short int i = aStartPos.itsRow+1; i < aEndPos.itsRow; i++) {
+                if (!isEmptyCell(aBoard, {i, aStartPos.itsCol})) {
+                    return false;
+                }
+            }
+        }
+    }
+
+
+    return true;
+}
+
+
+int getAmountEmptyCells(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize) {
+    int amount = 0;
+    for (short int i = 0; i < aBoardSize; i++) {
+        for (short int j = 0; j < aBoardSize; j++) {
+            if (aBoard[i][j].itsPieceType == NONE) {
+                amount++;
+            }
+        }
+    }
+    return amount;
+}
+
+int calculateScore(const Cell aBoard[][BOARD_SIZE_MAX], const int aPreviousAmountOfEmpty, const BoardSize& aBoardSize, const PlayerRole& aPlayerRole) {
+    int score = 0;
+
+    // Check if the king is captured
+    if (aPlayerRole == ATTACK) {
+        if (isKingCaptured(aBoard, aBoardSize)) {
+            return +1000000;
+        }
+    }
+
+    if (aPlayerRole == DEFENSE) {
+        if (isKingEscaped(aBoard, aBoardSize)) {
+            return +1000000;
+        }
+    }
+
+    //Check amount of captures the move did, the more captures the better
+    int captures = 0;
+    int amountOfEmpty = getAmountEmptyCells(aBoard, aBoardSize);
+    captures =  amountOfEmpty - aPreviousAmountOfEmpty;
+    score += captures * 1000;
+
+    return score;
+}
+
+
+Position chooseBestAiMove(Cell aBoard[][BOARD_SIZE_MAX], BoardSize& aBoardSize, PlayerRole& aPlayerRole) {
+    Position bestMove = {-1, -1};
+    Position previousPos = {-1, -1};
+
+    int bestScore = INT_MIN;
+    int amountOfEmpty = getAmountEmptyCells(aBoard, aBoardSize);
+
+    // Check all possible moves
+    for (short int i = 0; i < aBoardSize; ++i) {
+        for (short int j = 0; j < aBoardSize; ++j) {
+            if (aBoard[i][j].itsPieceType == SWORD || aBoard[i][j].itsPieceType == SHIELD || aBoard[i][j].itsPieceType == KING) {
+                // Check all possible moves for the current piece
+                for (short int k = 0; k < aBoardSize; ++k) {
+                    for (short int l = 0; l < aBoardSize; ++l) {
+                        // Check if the move is valid
+                        if (isValidMovementSilent(aPlayerRole, aBoard, {i, j}, {k, l})) {
+                            //Save the board
+                            Cell tempBoard[BOARD_SIZE_MAX][BOARD_SIZE_MAX];
+                            for (short int m = 0; m < aBoardSize; ++m) {
+                                for (short int n = 0; n < aBoardSize; ++n) {
+                                    tempBoard[m][n].itsCellType = aBoard[m][n].itsCellType;
+                                    tempBoard[m][n].itsPieceType = aBoard[m][n].itsPieceType;
+                                }
+                            }
+
+                            // Make the move
+                            PieceType piece = aBoard[i][j].itsPieceType;
+                            movePiece(aBoard, {i, j}, {k, l});
+                            capturePieces(aPlayerRole, aBoard, aBoardSize, {k, l});
+
+                            // Calculate the score of the move
+                            int score = calculateScore(aBoard, amountOfEmpty, aBoardSize, aPlayerRole);
+
+                            // Restore the board
+                            for (short int m = 0; m < aBoardSize; ++m) {
+                                for (short int n = 0; n < aBoardSize; ++n) {
+                                    aBoard[m][n].itsCellType = tempBoard[m][n].itsCellType;
+                                    aBoard[m][n].itsPieceType = tempBoard[m][n].itsPieceType;
+                                }
+                            }
+
+
+
+                            // Check if the score is better than the current best score
+                            if (score > bestScore) {
+                                bestScore = score;
+                                bestMove = {i, j};
+                                previousPos = {k, l};
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    movePiece(aBoard, bestMove, previousPos);
+
+    cout << "The AI moved from " << char(bestMove.itsRow + 65) << bestMove.itsCol + 1 << " to " << char(previousPos.itsRow + 65) << previousPos.itsCol + 1 << " Score: " << bestScore << endl;
+    return previousPos;
+}

@@ -41,6 +41,37 @@ void displayHnefataflLogo();
  * @param aBoardSize - Reference to the BoardSize variable to store the chosen board size.
  * @return True if the input is valid and a size is chosen, false otherwise.
  */
+
+
+/**
+ * @brief Display the main menu.
+ *
+ * This function displays the main menu of the game and asks the user to choose an option.
+ *
+ * @return The user's choice as an integer.
+ */
+int displayMenu();
+
+/**
+ * @brief Creates a new game
+ *
+ * This function creates a new game by asking the user to choose the size of the board and if they want to play against an AI.
+ *
+ * @param aBoardSize - Reference to the BoardSize variable to store the chosen board size.
+ * @param aBoard - Reference to the 2D array representing the game board.
+ * @param ai - Reference to the boolean variable to store if the game is against an AI or not.
+ */
+void newGame(BoardSize &aBoardSize, Cell aBoard[][BOARD_SIZE_MAX], bool &ai);
+
+
+/**
+ * @brief Display the rules of the game.
+ *
+ * This function displays the rules of the game.
+ */
+void displayRules();
+
+
 bool chooseSizeBoard(BoardSize& aBoardSize);
 
 /**
@@ -223,7 +254,7 @@ bool isKingCapturedV2(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoa
  * @param aBoardSize The size of the game board.
  * @param aPlayerRole The role of the player.
  */
-void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const PlayerRole& aPlayerRole);
+void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const PlayerRole& aPlayerRole, const bool& isAi);
 
 
 /**
@@ -236,7 +267,7 @@ void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize,
  * @param aPlayerRole The role of the player.
  *
  */
-void loadBoard(Cell aBoard[][BOARD_SIZE_MAX], BoardSize& aBoardSize, PlayerRole& aPlayerRole);
+void loadBoard(Cell aBoard[][BOARD_SIZE_MAX], BoardSize& aBoardSize, PlayerRole& aPlayerRole, bool& isAi);
 
 
 /**
@@ -269,6 +300,34 @@ void deleteSaveFile();
  * @param aPos The position of the chosen piece.
  */
 void displayChosenPieceBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const Position& aPos);
+
+
+/**
+ *
+ * @brief Decides the best move for the AI based on a weighted check.
+ *
+ * If it is the defense's turn, the AI will try to move the king to a fortress if its a better option.
+ * The weight is calculated by the number of pieces that can be captured by the move.
+ *
+ * @param aBoard
+ * @param aBoardSize
+ * @param aPlayerRole
+ * @return
+ */
+Position chooseBestAiMove(Cell aBoard[][BOARD_SIZE_MAX], BoardSize& aBoardSize, PlayerRole& aPlayerRole);
+
+
+/**
+ *
+ * @brief Calculates the score of a move based on the number of pieces that can be captured.
+ *
+ * @param aBoard
+ * @param aBoardSize
+ * @param aPlayerRole
+ * @return
+ */
+int calculateScore(const Cell aBoard[][BOARD_SIZE_MAX], const int aPreviousAmountOfEmpty, const BoardSize& aBoardSize, const PlayerRole& aPlayerRole);
+
 
 
 #endif // FUNCTIONS_H

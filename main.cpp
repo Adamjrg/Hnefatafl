@@ -17,6 +17,7 @@ determination.
 
 using namespace std;
 
+
 /**
 * @brief Function to play the Hnefatafl game.
 *
@@ -25,47 +26,47 @@ using namespace std;
 void playGame()
 {
     // Display the game logo
+    clearConsole();
     displayHnefataflLogo();
+    cin.clear();
+    cin.ignore(256, '\n');
+    int choice = displayMenu();
     BoardSize boardSize;
     Cell board[BOARD_SIZE_MAX][BOARD_SIZE_MAX];
     PlayerRole playerRole = ATTACK;
-    bool loaded = false;
+    bool ai = false;
 
-    if (isSaveFileExists()) {
-        cout << "A save file has been found, do you want to resume the game? Yes or No (Y,N)" << endl;
-        char answer;
-        cin.clear();
-        cin >> answer;
-        if (answer == 'Y' || answer == 'y') {
-            loadBoard(board, boardSize, playerRole);
-            clearConsole();
-            displayBoard(board, boardSize);
-            loaded = true;
-        } else {
-            clearConsole();
-            deleteSaveFile();
-        }
+    clearConsole();
+    displayHnefataflLogo();
+    switch (choice) {
+        case 1:
+            newGame(boardSize,board, ai);
+            break;
+        case 2:
+            if (isSaveFileExists()) {
+                loadBoard(board, boardSize, playerRole, ai);
+                displayBoard(board, boardSize);
+            }
+            else {
+                cout << "No save file found, starting a new game" << endl;
+                newGame(boardSize, board, ai);
+            }
+            break;
+        case 3:
+            displayRules();
+            playGame();
+            break;
+        case 4:
+            cout << "Thanks for playing!" << endl;
+            return;
+        default:
+            cout << "Invalid choice, please try again" << endl;
+            playGame();
+            break;
+
     }
 
-    // Ask the user to choose the size of the game board
-    if (!loaded) {
-        bool validInput = chooseSizeBoard(boardSize);
-        while (!validInput) {
-            cout << "Invalid input, please try again" << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-            validInput = chooseSizeBoard(boardSize);
-        }
 
-        // Initialize the game board
-        initializeBoard(board, boardSize);
-
-        // Clear the console
-        clearConsole();
-
-        // Display the game board
-        displayBoard(board, boardSize);
-    }
     //Game loop
     bool isGameOver = false;
 
@@ -97,6 +98,22 @@ void playGame()
         //Display the board
         displayBoard(board, boardSize);
 
+        saveBoard(board, boardSize, playerRole, ai);
+
+        //Check if the user is playing against an AI
+        if (ai) {
+            //Change the player
+            (playerRole == ATTACK) ? playerRole = DEFENSE : playerRole = ATTACK;
+            clearConsole();
+            Position chosenPos = chooseBestAiMove(board, boardSize, playerRole);
+            capturePieces(playerRole, board, boardSize, chosenPos);
+            displayBoard(board, boardSize);
+            cout << "AI played his turn" << endl;
+
+            //Change the player
+            (playerRole == ATTACK) ? playerRole = DEFENSE : playerRole = ATTACK;
+        }
+
         //Check if swords left are 0
         if (isSwordLeft(board, boardSize) == 0) {
             isGameOver = true;
@@ -120,11 +137,13 @@ void playGame()
         }
 
 
-        //Change the player
-        (playerRole == ATTACK) ? playerRole = DEFENSE : playerRole = ATTACK;
+        if (!ai) {
+            //Change the player if the user is not playing against an AI
+            (playerRole == ATTACK) ? playerRole = DEFENSE : playerRole = ATTACK;
+        }
 
         //Save board to a file in case of crash, to be able to resume the game
-        saveBoard(board, boardSize, playerRole);
+        saveBoard(board, boardSize, playerRole, ai);
 
     }
 

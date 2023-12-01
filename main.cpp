@@ -52,7 +52,6 @@ void playGame() {
     displayHnefataflLogo();
     int choice = displayMenu();
 
-
     clearConsole();
     displayHnefataflLogo();
     switch (choice) {

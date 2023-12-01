@@ -282,6 +282,17 @@ bool isSaveFileExists();
 
 
 /**
+ * @brief Check if a statistic file exists.
+ *
+ * This function checks if a statistic file exists.
+ *
+ * @return True if the statistic file exists, false otherwise.
+ */
+bool isStatisticFileExists();
+
+
+
+/**
  * @brief Delete the save file.
  *
  * This function deletes the save file.
@@ -319,7 +330,7 @@ Position chooseBestAiMove(Cell aBoard[][BOARD_SIZE_MAX], BoardSize& aBoardSize, 
 
 /**
  *
- * @brief Calculates the score of a move based on the number of pieces that can be captured.
+ * @brief Calculates the score of a move based on the number of pieces that can be captured and other factors.
  *
  * @param aBoard
  * @param aBoardSize
@@ -328,6 +339,52 @@ Position chooseBestAiMove(Cell aBoard[][BOARD_SIZE_MAX], BoardSize& aBoardSize, 
  */
 int calculateScore(const Cell aBoard[][BOARD_SIZE_MAX], const int aPreviousAmountOfEmpty, const BoardSize& aBoardSize, const PlayerRole& aPlayerRole);
 
+
+
+/**
+ *
+ * @brief Create a statistic file.
+ *
+ */
+void createStatisticFile();
+
+
+
+/**
+ *
+ * @brief read the statistics to a file.
+ *
+ * @param aAmountOfGames The amount of games played.
+ * @param aAmountOfDefenceWins The amount of wins for the defense.
+ * @param aAmountOfAttackWins The amount of wins for the attack.
+ * @param aAmountOfAiWins The amount of wins for the AI.
+ */
+void readStatisticFile(int& aAmountOfGames, int&aAmountOfDefenceWins, int& aAmountOfAttackWins, int& aAmountOfAiWins);
+
+
+
+/**
+ *
+ * @brief write the statistics to a file.
+ *
+ * @param aAmountOfGames The amount of games played.
+ * @param aAmountOfDefenceWins The amount of wins for the defense.
+ * @param aAmountOfAttackWins The amount of wins for the attack.
+ * @param aAmountOfAiWins The amount of wins for the AI.
+ */
+void writeStatisticFile(int aAmountOfGames, int aAmountOfDefenceWins, int aAmountOfAttackWins, int aAmountOfAiWins);
+
+
+/**
+ *
+ * @brief Display the statistics.
+ *
+ * @param amountOfAiWins The amount of wins for the AI.
+ * @param amountOfAttackWins The amount of wins for the attack.
+ * @param amountOfDefenceWins The amount of wins for the defense.
+ * @param amountOfPlayed The amount of games played.
+ */
+void displayStatistics(int amountOfPlayed, int amountOfAttackWins, int amountOfDefenceWins, int amountOfAiWins);
 
 
 #endif // FUNCTIONS_H

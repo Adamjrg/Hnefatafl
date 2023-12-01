@@ -993,3 +993,57 @@ Position chooseBestAiMove(Cell aBoard[][BOARD_SIZE_MAX], BoardSize& aBoardSize, 
     cout << "The AI moved from " << char(bestMove.itsRow + 65) << bestMove.itsCol + 1 << " to " << char(previousPos.itsRow + 65) << previousPos.itsCol + 1 << " Score: " << bestScore << endl;
     return previousPos;
 }
+
+void createStatisticFile() {
+    ofstream oFile("C:\\Windows\\Temp\\statistic.txt");
+
+
+    // Check if the file was opened successfully
+    if (oFile.is_open()) {
+        // Write the board size to the file
+        oFile << 0 << " " << 0 << " " << 0 << " " << 0 << " " << 0 << endl;
+
+        // Close the file
+        oFile.close();
+    }
+}
+
+bool isStatisticFileExists() {
+    ifstream iFile("C:\\Windows\\Temp\\statistic.txt");
+    return iFile.good();
+}
+
+void readStatisticFile(int& aAmountOfGames, int&aAmountOfDefenceWins, int& aAmountOfAttackWins, int& aAmountOfAiWins) {
+    ifstream iFile("C:\\Windows\\Temp\\statistic.txt");
+
+    // Check if the file was opened successfully
+    if (iFile.is_open()) {
+        // Read the board size from the file
+        iFile >> aAmountOfGames >> aAmountOfDefenceWins >> aAmountOfAttackWins >> aAmountOfAiWins >> aAmountOfAiWins;
+
+        // Close the file
+        iFile.close();
+    }
+}
+
+void writeStatisticFile(int aAmountOfGames, int aAmountOfDefenceWins, int aAmountOfAttackWins, int aAmountOfAiWins) {
+    remove("C:\\Windows\\Temp\\statistic.txt");
+    ofstream oFile("C:\\Windows\\Temp\\statistic.txt");
+
+    // Check if the file was opened successfully
+    if (oFile.is_open()) {
+        // Write the board size to the file
+        oFile << aAmountOfGames << " " << aAmountOfDefenceWins << " " << aAmountOfAttackWins << " " << aAmountOfAiWins << endl;
+        // Close the file
+        oFile.close();
+    }
+}
+
+void displayStatistics(int amountOfPlayed, int amountOfAttackWins, int amountOfDefenceWins, int amountOfAiWins) {
+    cout << "-------------------" << BLUE_BOLD << "Statistics"<< RESET << "-----------------------" << endl;
+    cout << "Amount of games played: " << amountOfPlayed << endl;
+    cout << "Amount of AI wins: " << amountOfAiWins << endl;
+    cout << "Amount of attack wins: " << amountOfAttackWins << endl;
+    cout << "Amount of defence wins: " << amountOfDefenceWins << endl;
+    cout << "---------------------------------------------------" << endl;
+}

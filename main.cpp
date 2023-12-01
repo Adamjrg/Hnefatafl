@@ -23,24 +23,42 @@ using namespace std;
 *
 * This function orchestrates the Hnefatafl game, including setup, gameplay, and outcome determination.
 */
-void playGame()
-{
-    // Display the game logo
-    clearConsole();
-    displayHnefataflLogo();
-    cin.clear();
-    cin.ignore(256, '\n');
-    int choice = displayMenu();
+void playGame() {
     BoardSize boardSize;
     Cell board[BOARD_SIZE_MAX][BOARD_SIZE_MAX];
     PlayerRole playerRole = ATTACK;
     bool ai = false;
+    int amountOfPlayed = 0;
+    int amountOfDefenceWins = 0;
+    int amountOfAttackWins = 0;
+    int amountOfAiWins = 0;
+
+    // Display the game logo
+    clearConsole();
+    displayHnefataflLogo();
+    //Create the statistics file if it doesn't exist
+    if (!isStatisticFileExists()) {
+        createStatisticFile();
+    }
+    readStatisticFile(amountOfPlayed, amountOfAttackWins, amountOfDefenceWins, amountOfAiWins);
+
+    //Display the statistics
+    displayStatistics(amountOfPlayed, amountOfAttackWins, amountOfDefenceWins, amountOfAiWins);
+
+
+    cin.clear();
+    cin.ignore(256, '\n');
+    clearConsole();
+    displayHnefataflLogo();
+    int choice = displayMenu();
+
 
     clearConsole();
     displayHnefataflLogo();
     switch (choice) {
         case 1:
             newGame(boardSize,board, ai);
+            writeStatisticFile(amountOfPlayed+1, amountOfDefenceWins, amountOfAttackWins, amountOfAiWins);
             break;
         case 2:
             if (isSaveFileExists()) {
@@ -50,6 +68,7 @@ void playGame()
             else {
                 cout << "No save file found, starting a new game" << endl;
                 newGame(boardSize, board, ai);
+                writeStatisticFile(amountOfPlayed+1, amountOfDefenceWins, amountOfAttackWins, amountOfAiWins);
             }
             break;
         case 3:
@@ -118,22 +137,26 @@ void playGame()
         if (isSwordLeft(board, boardSize) == 0) {
             isGameOver = true;
             cout << "There is no more sword, the defenders win !" << endl;
+            writeStatisticFile(amountOfPlayed, amountOfDefenceWins+1, amountOfAttackWins, amountOfAiWins);
         }
 
         //Check if the king is escaped
         if (isKingEscaped(board, boardSize)) {
             isGameOver = true;
             cout << "The king is escaped, the attackers win !" << endl;
+            writeStatisticFile(amountOfPlayed, amountOfDefenceWins, amountOfAttackWins+1, (ai ? amountOfAiWins+1 : amountOfAiWins));
         }
         //Check if the king is captured
         if (isKingCaptured(board, boardSize)) {
             isGameOver = true;
             cout << "The king is captured, the defenders win !" << endl;
+            writeStatisticFile(amountOfPlayed, amountOfDefenceWins+1, amountOfAttackWins, amountOfAiWins);
         }
         //Check if only Sword are left
         if (!isSwordLeft(board, boardSize)) {
             isGameOver = true;
             cout << "There is no more sword, the defenders win !" << endl;
+            writeStatisticFile(amountOfPlayed, amountOfDefenceWins+1, amountOfAttackWins, amountOfAiWins);
         }
 
 

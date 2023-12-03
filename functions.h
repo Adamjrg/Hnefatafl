@@ -41,6 +41,7 @@ void displayHnefataflLogo();
  * @param aBoardSize - Reference to the BoardSize variable to store the chosen board size.
  * @return True if the input is valid and a size is chosen, false otherwise.
  */
+bool chooseSizeBoard(BoardSize& aBoardSize);
 
 
 /**
@@ -385,6 +386,15 @@ void writeStatisticFile(int aAmountOfGames, int aAmountOfDefenceWins, int aAmoun
  * @param amountOfPlayed The amount of games played.
  */
 void displayStatistics(int amountOfPlayed, int amountOfAttackWins, int amountOfDefenceWins, int amountOfAiWins);
+
+
+/**
+ *
+ * @brief Display the victory animation.
+ *
+ * @param aPlayerRole The role of the player.
+ */
+void displayThanksForPlayingAnimation();
 
 
 #endif // FUNCTIONS_H

@@ -25,6 +25,12 @@
 #include "typeDef.h"
 #include "functions.h"
 
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
+
 using namespace std;
 
 const string RESET = "\e[0m";
@@ -50,7 +56,16 @@ void clearConsole()
 #endif
 }
 
-
+void universalSleep(int milliseconds)
+{
+#ifdef _WIN32
+    // Windows
+    Sleep(milliseconds);
+#else
+    // Unix-like systems
+    usleep(milliseconds * 1000); // usleep uses microseconds, so multiply by 1000 to convert to milliseconds
+#endif
+}
 
 
 void displayHnefataflLogo(){
@@ -608,49 +623,57 @@ bool isKingCaptured(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoard
     return false;
 }
 
+bool isPieceSurrounded(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const Position& aPos) {
 
-bool isKingCapturedV2(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, Position aKingPos)
-{
-    // Check if the given position is out of bounds
-    if (aKingPos.itsRow < 0 || aKingPos.itsRow >= aBoardSize || aKingPos.itsCol < 0 || aKingPos.itsCol >= aBoardSize) {
-        return false;
-    }
-
-    // Check if the king is on a fortress or castle cell
-    if (aBoard[aKingPos.itsRow][aKingPos.itsCol].itsCellType == FORTRESS || aBoard[aKingPos.itsRow][aKingPos.itsCol].itsCellType == CASTLE) {
-        return true;
-    }
-
-    // Check if the king is captured by attackers in adjacent cells
-    if (aBoard[aKingPos.itsRow][aKingPos.itsCol].itsPieceType == KING) {
-        // Check in all eight possible directions
-        for (int i = -1; i <= 1; ++i) {
-            for (int j = -1; j <= 1; ++j) {
-                if (i == 0 && j == 0) {
-                    continue;
-                }
-
-                // Calculate the adjacent position
-                Position adjPos = {aKingPos.itsRow + i, aKingPos.itsCol + j};
-
-                // Check if the adjacent position is within bounds
-                if (adjPos.itsRow >= 0 && adjPos.itsRow < aBoardSize && adjPos.itsCol >= 0 && adjPos.itsCol < aBoardSize) {
-                    if (aBoard[adjPos.itsRow][adjPos.itsCol].itsPieceType == SWORD || aBoard[adjPos.itsRow][adjPos.itsCol].itsPieceType == SHIELD) {
-                        // Recursively check if the king is captured from the adjacent cell
-                        if (!isKingCapturedV2(aBoard, aBoardSize, adjPos)) {
-                            return false;  // King is not captured
-                        }
-                    }
+    //Check if the piece is surrounded walls included and cell type included
+    if (aPos.itsRow - 1 < 0 || aBoard[aPos.itsRow-1][aPos.itsCol].itsPieceType != NONE || aBoard[aPos.itsRow-1][aPos.itsCol].itsCellType == CASTLE || aBoard[aPos.itsRow-1][aPos.itsCol].itsCellType == FORTRESS) {
+        if (aPos.itsRow + 1 >= aBoardSize || aBoard[aPos.itsRow+1][aPos.itsCol].itsPieceType != NONE || aBoard[aPos.itsRow+1][aPos.itsCol].itsCellType == CASTLE || aBoard[aPos.itsRow+1][aPos.itsCol].itsCellType == FORTRESS) {
+            if (aPos.itsCol - 1 < 0 || aBoard[aPos.itsRow][aPos.itsCol-1].itsPieceType != NONE || aBoard[aPos.itsRow][aPos.itsCol-1].itsCellType == CASTLE || aBoard[aPos.itsRow][aPos.itsCol-1].itsCellType == FORTRESS) {
+                if (aPos.itsCol + 1 >= aBoardSize || aBoard[aPos.itsRow][aPos.itsCol+1].itsPieceType != NONE || aBoard[aPos.itsRow][aPos.itsCol+1].itsCellType == CASTLE || aBoard[aPos.itsRow][aPos.itsCol+1].itsCellType == FORTRESS) {
+                    return true;
                 }
             }
         }
-
-        return true;  // King is captured by attackers
     }
-
-    return false;  // King is not in a valid position
+    return false;
 }
 
+
+bool isKingCapturedV2(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, Position aKingPos)
+{
+    // If the king's position is not specified, find it
+    if (aKingPos.itsRow == -1 || aKingPos.itsCol == -1) {
+        aKingPos = getKingPosition(aBoard, aBoardSize);
+    }
+
+    // Check if the king is surrounded by pieces or walls
+    if (isPieceSurrounded(aBoard, aBoardSize, aKingPos)) {
+        return true;
+    }
+
+    // Check if the king can move to any neighboring cell
+    if (aKingPos.itsRow - 1 >= 0 && aBoard[aKingPos.itsRow-1][aKingPos.itsCol].itsPieceType == NONE && aBoard[aKingPos.itsRow-1][aKingPos.itsCol].itsCellType != CASTLE && aBoard[aKingPos.itsRow-1][aKingPos.itsCol].itsCellType != FORTRESS) {
+        if (!isKingCapturedV2(aBoard, aBoardSize, {aKingPos.itsRow-1, aKingPos.itsCol})) {
+            return false;
+        }
+    }
+    if (aKingPos.itsRow + 1 < aBoardSize && aBoard[aKingPos.itsRow+1][aKingPos.itsCol].itsPieceType == NONE && aBoard[aKingPos.itsRow+1][aKingPos.itsCol].itsCellType != CASTLE && aBoard[aKingPos.itsRow+1][aKingPos.itsCol].itsCellType != FORTRESS) {
+        if (!isKingCapturedV2(aBoard, aBoardSize, {aKingPos.itsRow+1, aKingPos.itsCol})) {
+            return false;
+        }
+    }
+    if (aKingPos.itsCol - 1 >= 0 && aBoard[aKingPos.itsRow][aKingPos.itsCol-1].itsPieceType == NONE && aBoard[aKingPos.itsRow][aKingPos.itsCol-1].itsCellType != CASTLE && aBoard[aKingPos.itsRow][aKingPos.itsCol-1].itsCellType != FORTRESS) {
+        if (!isKingCapturedV2(aBoard, aBoardSize, {aKingPos.itsRow, aKingPos.itsCol - 1})) {
+            return false;
+        }
+    }
+    if (aKingPos.itsCol + 1 < aBoardSize && aBoard[aKingPos.itsRow][aKingPos.itsCol+1].itsPieceType == NONE && aBoard[aKingPos.itsRow][aKingPos.itsCol+1].itsCellType != CASTLE && aBoard[aKingPos.itsRow][aKingPos.itsCol+1].itsCellType != FORTRESS) {
+        if (!isKingCapturedV2(aBoard, aBoardSize, {aKingPos.itsRow, aKingPos.itsCol + 1})) {
+            return false;
+        }
+    }
+
+}
 
 void saveBoard(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aBoardSize, const PlayerRole& aPlayer, const bool& isAi) {
     ofstream oFile("C:\\Windows\\Temp\\save.txt");
@@ -1046,4 +1069,45 @@ void displayStatistics(int amountOfPlayed, int amountOfAttackWins, int amountOfD
     cout << "Amount of attack wins: " << amountOfAttackWins << endl;
     cout << "Amount of defence wins: " << amountOfDefenceWins << endl;
     cout << "---------------------------------------------------" << endl;
+}
+
+void displayThanksForPlayingAnimation() {
+    clearConsole();
+    cout << R"(
+        ███        ▄█    █▄       ▄████████ ███▄▄▄▄      ▄█   ▄█▄    ▄████████
+    ▀█████████▄   ███    ███     ███    ███ ███▀▀▀██▄   ███ ▄███▀   ███    ███
+       ▀███▀▀██   ███    ███     ███    ███ ███   ███   ███▐██▀     ███    █▀
+        ███   ▀  ▄███▄▄▄▄███▄▄   ███    ███ ███   ███  ▄█████▀      ███
+        ███     ▀▀███▀▀▀▀███▀  ▀███████████ ███   ███ ▀▀█████▄    ▀███████████
+        ███       ███    ███     ███    ███ ███   ███   ███▐██▄            ███
+        ███       ███    ███     ███    ███ ███   ███   ███ ▀███▄    ▄█    ███
+       ▄████▀     ███    █▀      ███    █▀   ▀█   █▀    ███   ▀█▀  ▄████████▀
+                                                        ▀
+                                                                                )" << endl;
+    universalSleep(200);
+    cout << R"(
+           ▄████████  ▄██████▄     ▄████████
+          ███    ███ ███    ███   ███    ███
+          ███    █▀  ███    ███   ███    ███
+         ▄███▄▄▄     ███    ███  ▄███▄▄▄▄██▀
+        ▀▀███▀▀▀     ███    ███ ▀▀███▀▀▀▀▀
+          ███        ███    ███ ▀███████████
+          ███        ███    ███   ███    ███
+          ███         ▀██████▀    ███    ███
+                                  ███    ███
+                                                                                )" << endl;
+    universalSleep(200);
+    cout << R"(
+         ██▓███   ██▓    ▄▄▄     ▓██   ██▓ ██▓ ███▄    █   ▄████
+        ▓██░  ██▒▓██▒   ▒████▄    ▒██  ██▒▓██▒ ██ ▀█   █  ██▒ ▀█▒
+        ▓██░ ██▓▒▒██░   ▒██  ▀█▄   ▒██ ██░▒██▒▓██  ▀█ ██▒▒██░▄▄▄░
+        ▒██▄█▓▒ ▒▒██░   ░██▄▄▄▄██  ░ ▐██▓░░██░▓██▒  ▐▌██▒░▓█  ██▓
+        ▒██▒ ░  ░░██████▒▓█   ▓██▒ ░ ██▒▓░░██░▒██░   ▓██░░▒▓███▀▒
+        ▒▓▒░ ░  ░░ ▒░▓  ░▒▒   ▓▒█░  ██▒▒▒ ░▓  ░ ▒░   ▒ ▒  ░▒   ▒
+        ░▒ ░     ░ ░ ▒  ░ ▒   ▒▒ ░▓██ ░▒░  ▒ ░░ ░░   ░ ▒░  ░   ░
+        ░░         ░ ░    ░   ▒   ▒ ▒ ░░   ▒ ░   ░   ░ ░ ░ ░   ░
+                     ░  ░     ░  ░░ ░      ░           ░       ░
+                                  ░ ░
+                                                                                )" << endl;
+    universalSleep(200);
 }

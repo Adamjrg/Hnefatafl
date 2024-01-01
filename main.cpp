@@ -130,6 +130,39 @@ void playGame() {
 
         saveBoard(board, boardSize, playerRole, ai);
 
+        //Check if swords left are 0
+        if (isSwordLeft(board, boardSize) == 0) {
+            isGameOver = true;
+            cout << "There is no more sword, the defenders win !" << endl;
+            writeStatisticFile(amountOfPlayed, amountOfDefenceWins+1, amountOfAttackWins, amountOfAiWins);
+        }
+
+        //Check if the king is escaped
+        if (isKingEscaped(board, boardSize)) {
+            isGameOver = true;
+            cout << "The king is escaped, the attackers win !" << endl;
+            writeStatisticFile(amountOfPlayed, amountOfDefenceWins, amountOfAttackWins+1, (ai ? amountOfAiWins+1 : amountOfAiWins));
+        }
+        //Check if the king is captured
+        if (isKingCaptured(board, boardSize)) {
+            isGameOver = true;
+            cout << "The king is captured, the defenders win !" << endl;
+            writeStatisticFile(amountOfPlayed, amountOfDefenceWins+1, amountOfAttackWins, amountOfAiWins);
+        }
+        //Check if only Sword are left
+        if (!isSwordLeft(board, boardSize)) {
+            isGameOver = true;
+            cout << "There is no more sword, the defenders win !" << endl;
+            writeStatisticFile(amountOfPlayed, amountOfDefenceWins+1, amountOfAttackWins, amountOfAiWins);
+        }
+
+
+        if (!ai) {
+            //Change the player if the user is not playing against an AI
+            (playerRole == ATTACK) ? playerRole = DEFENSE : playerRole = ATTACK;
+        }
+
+
         //Check if the user is playing against an AI
         if (ai) {
             //Change the player
@@ -237,9 +270,11 @@ void launchTests(){
 * The main function serves as the entry point for the Hnefatafl game. It can be used to start the game or run tests.
 *
 * @return 0 for successful execution.
+ *
 */
 int main() {
-    launchTests();
-    //playGame();
+    //launchTests();
+
+    playGame();
     return 0;
 }

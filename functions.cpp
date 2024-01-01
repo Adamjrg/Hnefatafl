@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <random>
 
 #include "typeDef.h"
 #include "functions.h"
@@ -929,7 +930,7 @@ int getAmountEmptyCells(const Cell aBoard[][BOARD_SIZE_MAX], const BoardSize& aB
     return amount;
 }
 
-int calculateScore(const Cell aBoard[][BOARD_SIZE_MAX], const int aPreviousAmountOfEmpty, const BoardSize& aBoardSize, const PlayerRole& aPlayerRole) {
+int calculateScore(const Cell aBoard[][BOARD_SIZE_MAX], const int aPreviousAmountOfEmpty, const BoardSize& aBoardSize, const PlayerRole& aPlayerRole, const bool isKing) {
     int score = 0;
 
     // Check if the king is captured
@@ -944,6 +945,54 @@ int calculateScore(const Cell aBoard[][BOARD_SIZE_MAX], const int aPreviousAmoun
             return +1000000;
         }
     }
+
+    //Check if the king is closer to the fortress
+
+    if (aPlayerRole == DEFENSE && isKing) {
+        Position kingPos = getKingPosition(aBoard, aBoardSize);
+        //Calculate the distance from the king to all 4 fortresses
+        int distance1 = abs(kingPos.itsRow - 0) + abs(kingPos.itsCol - 0);
+        int distance2 = abs(kingPos.itsRow - 0) + abs(kingPos.itsCol - (aBoardSize-1));
+        int distance3 = abs(kingPos.itsRow - (aBoardSize-1)) + abs(kingPos.itsCol - 0);
+        int distance4 = abs(kingPos.itsRow - (aBoardSize-1)) + abs(kingPos.itsCol - (aBoardSize-1));
+
+        //Chose the lowest distance
+        int minDistance = min(min(distance1, distance2), min(distance3, distance4));
+
+        //Add the distance to the score
+        score = 1000;
+        score -= minDistance * 100;
+    }
+
+
+    //Check if the king is surrounded on at least 3 sides
+    if (aPlayerRole == DEFENSE && isKing) {
+        Position kingPos = getKingPosition(aBoard, aBoardSize);
+        int total = 0;
+        if (kingPos.itsRow != -1 && kingPos.itsCol != -1) {
+            //Check up
+            if (aBoard[kingPos.itsRow][kingPos.itsCol-1].itsPieceType == SWORD || kingPos.itsCol-1 < 0) {
+                total++;
+            }
+            //Check down
+            if (aBoard[kingPos.itsRow][kingPos.itsCol+1].itsPieceType == SWORD|| kingPos.itsCol+1 > aBoardSize) {
+                total++;
+            }
+            //Check left
+            if (aBoard[kingPos.itsRow-1][kingPos.itsCol].itsPieceType == SWORD || kingPos.itsRow-1 < 0) {
+                total++;
+            }
+            //Check right
+            if (aBoard[kingPos.itsRow+1][kingPos.itsCol].itsPieceType == SWORD || kingPos.itsRow+1 > aBoardSize) {
+                total++;
+            }
+        }
+        if (total >= 3) {
+            score -= 100000;
+        }
+    }
+
+
 
     //Check amount of captures the move did, the more captures the better
     int captures = 0;
@@ -986,7 +1035,7 @@ Position chooseBestAiMove(Cell aBoard[][BOARD_SIZE_MAX], BoardSize& aBoardSize, 
                             capturePieces(aPlayerRole, aBoard, aBoardSize, {k, l});
 
                             // Calculate the score of the move
-                            int score = calculateScore(aBoard, amountOfEmpty, aBoardSize, aPlayerRole);
+                            int score = calculateScore(aBoard, amountOfEmpty, aBoardSize, aPlayerRole, piece == KING);
 
                             // Restore the board
                             for (short int m = 0; m < aBoardSize; ++m) {
@@ -1008,6 +1057,21 @@ Position chooseBestAiMove(Cell aBoard[][BOARD_SIZE_MAX], BoardSize& aBoardSize, 
                     }
                 }
             }
+        }
+    }
+
+    //If the best score is 0 then chose a random move
+    if (bestScore == 0) {
+        cout << "The AI chose a random move as no good moves where found." << endl;
+        bool isRandomMoveValid = false;
+        while (!isRandomMoveValid) {
+            random_device rd;
+            default_random_engine eng(rd());
+            uniform_int_distribution<int> distr(0, aBoardSize);
+
+            bestMove = {distr(eng) % aBoardSize, distr(eng) % aBoardSize};
+            previousPos = {distr(eng) % aBoardSize, distr(eng) % aBoardSize};
+            isRandomMoveValid = isValidMovementSilent(aPlayerRole, aBoard, bestMove, previousPos);
         }
     }
 

@@ -58,4 +58,4 @@ This project was created by Adam G as a class assignment for DEV1 at the IUT of 
 
 ## Images
 
-<img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/MainMenu.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/Options.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/Rules.PNG" width="400"/>
+<img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/MainMenu.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/Options.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/Rules.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/AI.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/11By11.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/13By13.PNG" width="400"/>

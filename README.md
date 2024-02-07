@@ -55,3 +55,7 @@ This project was created by Adam G as a class assignment for DEV1 at the IUT of 
 - [HNEFATAFL RULES - The Museum Of Games and Gaming](https://www.mastersofgames.com/rules/hnefatafl-viking-chess-rules.htm)
 - [How to play Hnefatafl | Official Rules | UltraBoardGames](https://www.ultraboardgames.com/hnefatafl/game-rules.php)
 - And the rules set by the assignement
+
+## Images
+
+<img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/MainMenu.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/Options.PNG" width="400"/>

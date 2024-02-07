@@ -46,6 +46,10 @@ This project has the following features:
 - An AI opponent that uses a score system to calculate which move to make prioritizing escaping the king or capturing a piece. The AI can play only as the deffence, and is relitevely hard to beat as a beginner to the game.
 - Statistics tracking that records the number of games played, won, and lost, as well as how many times you played against an AI. The statistics are stored in a file.
 - Graphics rendering that uses ASCII to display the board and the pieces in color and with Unicode symbols. The graphics are compatible with most terminal.
+ 
+## Tests
+
+There are also tests for each function that can be executed by uncommenting the line in the main.cpp file. These tests were provided by the University and have not been modified in any way. Author and credits are mentionned in the file
 
 ## Credits
 

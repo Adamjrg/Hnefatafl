@@ -10,7 +10,7 @@ To install and run this project, you need to have a C++ compiler and a terminal 
 
 To clone this repository, use the following command:
 
-`git clone https://github.com/adamjrg/hnefatafl.git`
+`git clone https://github.com/adamjrg/hnefatafl.git`  
 `cd hnefatafl`
 
 To compile the source code, open it up in your favorite IDE (I use CLion) and press the build button
@@ -58,4 +58,4 @@ This project was created by Adam G as a class assignment for DEV1 at the IUT of 
 
 ## Images
 
-<img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/MainMenu.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/Options.PNG" width="400"/>
+<img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/MainMenu.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/Options.PNG" width="400"/> <img src="https://github.com/Adamjrg/Hnefatafl/blob/prod/images/Rules.PNG" width="400"/>

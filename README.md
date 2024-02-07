@@ -17,6 +17,8 @@ To compile the source code, open it up in your favorite IDE (I use CLion) and pr
 
 This will create a .exe file that you can run
 
+You can also download the precompiled version in the Releases tab. Make sure you have UTF-8 enabled in your console.
+
 ## Usage
 
 When you run the program, you will see a menu with the following options:
